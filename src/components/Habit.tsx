@@ -15,7 +15,7 @@ const Wrapper = styled.section`
 const ContentWrapper = styled.section`
     width: 90%;
     max-width: 800px;
-    background-color: #0e1e15;
+    background-color: #0e1e15;   
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -24,7 +24,7 @@ const ContentWrapper = styled.section`
 const Header = styled.header`
     text-align: center;
     margin-bottom: 20px;
-`;
+`; 
 
 const Ul = styled.ul`
     list-style-type: none;
@@ -101,7 +101,6 @@ function Habit() {
         <Wrapper>
             <ContentWrapper>
                 <Header>
-                    <h1>Personal Growth</h1>
                     <Ul>
                         <Li>0 - Struggle</Li>
                         <Li>1 - Motion</Li>

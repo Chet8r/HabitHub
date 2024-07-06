@@ -13,6 +13,7 @@ const Wrapper = styled.nav`
 const Logo = styled.div`
     width: 100px; /* Adjust width as needed */
     height: auto; /* Ensure logo scales appropriately */
+    font-size: small;
 `;
 
 const NavLinks = styled.ul`
@@ -30,10 +31,11 @@ const NavItem = styled.li`
 const StyledLink = styled.a`
     color: #163020; /* Dark greenish color */
     text-decoration: none;
-    padding: 14px 16px; /* Padding inside each link */
+    padding: 20px 16px; //Padding inside each link
     transition: background-color 0.3s; /* Smooth background color transition */
 
     &:hover {
+        border-radius: 5%;
         background-color: #becdbe; /* Light gray background on hover */
     }
 `;
@@ -49,11 +51,11 @@ function Nav() {
                 <h1>HabitHub</h1>
             </Logo>
             <NavLinks>
-                <NavItem><StyledLink href="lessons.asp">Lessons</StyledLink></NavItem>
+                {/* <NavItem><StyledLink href="lessons.asp">Lessons</StyledLink></NavItem>
                 <NavItem><StyledLink href="banking.asp">Banking</StyledLink></NavItem>
                 <NavItem><StyledLink href="socialhub.asp">Social Hub</StyledLink></NavItem>
                 <NavItem><StyledLink href="friends.asp">Friends</StyledLink></NavItem>
-                <NavItem><StyledLink href="products.asp">Products</StyledLink></NavItem>
+                <NavItem><StyledLink href="products.asp">Store</StyledLink></NavItem> */}
                 <NavItem><AccountLink href="#">Account</AccountLink></NavItem>
             </NavLinks>
         </Wrapper>

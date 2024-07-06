@@ -35,7 +35,7 @@ const useUserData = () => {
       score: 0,
       updateDate: new Date().toISOString(),
       sensitive: false,
-      updateEntryDur: 0,
+      // updateEntryDur: 0,
     };
     const updatedHabits = [...userData.habits, newHabit];
     updateUserData("habits", updatedHabits);

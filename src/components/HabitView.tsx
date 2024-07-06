@@ -39,17 +39,17 @@ const Header = styled.header`
   align-items: center;
 `;
 
-const TitleContainer = styled.div`
-  flex: 1; /* Take as much space as possible */
-`;
+// const TitleContainer = styled.div`
+//   flex: 1; /* Take as much space as possible */
+// `;
 
-const Title = styled.h1`
-  margin: 0;
-`;
+// const Title = styled.h1`
+//   margin: 0;
+// `;
 
-const EyeIcon = styled.div`
-  font-size: 1.2em;
-`;
+// const EyeIcon = styled.div`
+//   font-size: 1.2em;
+// `;
 
 const Table = styled.table`
   width: 100%;
@@ -234,7 +234,7 @@ const HabitsTable: React.FC = () => {
       score: 0,
       updateDate: new Date().toISOString(),
       sensitive: isSensitive,
-      updateEntryDur: 0,
+      //   updateEntryDur: 0,
     };
 
     setUser({ ...user, habits: [...user.habits, newHabit] });

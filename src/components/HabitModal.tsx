@@ -151,7 +151,12 @@ const StyledCheckbox = styled.input`
 interface HabitModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (name: string, status: string, isSensitive: boolean) => void;
+  onSave: (
+    name: string,
+    status: string,
+    isSensitive: boolean,
+    updateDur: string
+  ) => void;
   statusLevels: string[];
   EntryDuration: string[];
 }
@@ -166,9 +171,10 @@ const HabitModal: React.FC<HabitModalProps> = ({
   const [name, setName] = useState("");
   const [status, setStatus] = useState(statusLevels[0]);
   const [isSensitive, setIsSensitive] = useState(false);
+  const [updateDuration, setUpdateDuration] = useState("");
 
   const handleSave = () => {
-    onSave(name, status, isSensitive);
+    onSave(name, status, isSensitive, updateDuration);
     setName("");
     setStatus(statusLevels[0]);
     setIsSensitive(false);
@@ -203,10 +209,13 @@ const HabitModal: React.FC<HabitModalProps> = ({
           </PropertyCard>
           <PropertyCard>
             <PropertyName>Duration:</PropertyName>
-            <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-              {EntryDuration.map((entry) => (
-                <option key={entry} value={entry}>
-                  {entry}
+            <Select
+              value={status}
+              onChange={(e) => setUpdateDuration(e.target.value)}
+            >
+              {EntryDuration.map((duration) => (
+                <option key={duration} value={duration}>
+                  {duration}
                 </option>
               ))}
             </Select>

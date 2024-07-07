@@ -1,11 +1,5 @@
 // types.ts
 
-// export enum DurationType {
-//   Daily = 0,
-//   Weekly = 1,
-//   Monthly = 2,
-// }
-
 export interface Habit {
   id: number;
   habitName: string;
@@ -13,7 +7,7 @@ export interface Habit {
   score: number;
   updateDate: string;
   sensitive: boolean;
-  // updateEntryDur: DurationType;
+  updateEntryDur: string;
 }
 
 export interface HabitLog {

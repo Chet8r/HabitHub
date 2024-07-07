@@ -1,6 +1,7 @@
 // demoData.ts
 
 import { User } from "./components/types";
+import { habitHubConstants } from "./components/habitHubConstants";
 
 export const userData: User = {
   userId: 123,
@@ -14,7 +15,7 @@ export const userData: User = {
       score: 4,
       updateDate: new Date().toISOString(),
       sensitive: false,
-      // updateEntryDur: 0,
+      updateEntryDur: habitHubConstants.DAILY,
     },
     {
       id: 2,
@@ -23,7 +24,7 @@ export const userData: User = {
       score: 2,
       updateDate: new Date().toISOString(),
       sensitive: false,
-      // updateEntryDur: 0,
+      updateEntryDur: "Daily",
     },
     {
       id: 3,
@@ -32,7 +33,7 @@ export const userData: User = {
       score: 0,
       updateDate: new Date().toISOString(),
       sensitive: false,
-      // updateEntryDur: 0,
+      updateEntryDur: habitHubConstants.DAILY,
     },
     {
       id: 4,
@@ -41,7 +42,7 @@ export const userData: User = {
       score: 5,
       updateDate: new Date().toISOString(),
       sensitive: false,
-      // updateEntryDur: 0,
+      updateEntryDur: habitHubConstants.DAILY,
     },
     {
       id: 5,
@@ -50,7 +51,7 @@ export const userData: User = {
       score: 3,
       updateDate: new Date().toISOString(),
       sensitive: false,
-      // updateEntryDur: 0,
+      updateEntryDur: habitHubConstants.DAILY,
     },
   ],
   habitLog: [

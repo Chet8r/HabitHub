@@ -158,19 +158,17 @@ const HabitsTable: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isEditing, setEditing] = useState(false);
-  const [hideSensitive, setHideSensitive] = useState(false); // State to toggle sensitive data
+  const [hideSensitive, setHideSensitive] = useState(false);
 
-  // Load data from localStorage once on component mount
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     } else {
-      setUser(userData); // Initialize with demo data if nothing is in local storage
+      setUser(userData);
     }
   }, []);
 
-  // Save user data to localStorage whenever the user state changes
   useEffect(() => {
     if (user) {
       localStorage.setItem("user", JSON.stringify(user));
@@ -223,7 +221,8 @@ const HabitsTable: React.FC = () => {
   const handleSaveHabit = (
     name: string,
     status: string,
-    isSensitive: boolean
+    isSensitive: boolean,
+    updateDur: string
   ) => {
     if (!user) return;
 
@@ -234,7 +233,7 @@ const HabitsTable: React.FC = () => {
       score: 0,
       updateDate: new Date().toISOString(),
       sensitive: isSensitive,
-      //   updateEntryDur: 0,
+      updateEntryDur: updateDur,
     };
 
     setUser({ ...user, habits: [...user.habits, newHabit] });

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -7,152 +6,28 @@ import {
   faEdit,
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
-import { userData } from "../demoData";
-import { User, Habit } from "./types";
-import HabitModal from "./HabitModal";
+import { userData } from "../../demoData";
+import { User, Habit } from "../Shared/types";
 import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
+import NewHabitModal from "./NewHabitModal";
+import {
+  ContentWrapper,
+  DeleteButton,
+  HabitActions,
+  Header,
+  NewHabitSection,
+  Table,
+  Td,
+  Th,
+  ToggleButton,
+  Tr,
+  Wrapper,
+  CheckMark,
+  ActionButtonsContainer, // Import the ActionButtonsContainer styled component
+} from "./styled-conponents/StyledHabitView";
 
-const statusLevels = ["Struggle", "Kickstart", "Momentum", "Habit"];
+const statusLevels = ["Initiation", "Progress", "Consistency", "Habit"];
 const EntryDuration = ["Daily", "Weekly", "Monthly"];
-
-const Wrapper = styled.section`
-  color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  font-family: "Roboto", sans-serif;
-`;
-
-const ContentWrapper = styled.div`
-  width: 90%;
-  max-width: 800px;
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-// const TitleContainer = styled.div`
-//   flex: 1; /* Take as much space as possible */
-// `;
-
-// const Title = styled.h1`
-//   margin: 0;
-// `;
-
-// const EyeIcon = styled.div`
-//   font-size: 1.2em;
-// `;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-`;
-
-const Th = styled.th`
-  background-color: #163020;
-  color: #fff;
-  font-weight: 500;
-  padding: 12px;
-  text-align: left;
-`;
-
-const Td = styled.td`
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-`;
-
-const Tr = styled.tr`
-  &:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-`;
-
-const HabitActions = styled.td`
-  .action-button {
-    width: 40px;
-    background-color: #d8d8d8;
-    border: none;
-    color: #3c4043;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 8px 12px;
-    border-radius: 4px;
-    margin-right: 4px;
-    font-family: "Roboto", sans-serif;
-  }
-
-  .action-button:hover {
-    background-color: #e7e7e7;
-  }
-`;
-
-const NewHabitSection = styled.section`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-
-  button {
-    margin-left: 10px;
-    background-color: #00c600;
-    border: none;
-    color: #3c4043;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 10px 16px;
-    border-radius: 4px;
-    font-family: "Roboto", sans-serif;
-  }
-
-  button:hover {
-    background-color: #04e104;
-  }
-
-  .editBtn {
-    background-color: orange;
-  }
-
-  .editBtn:hover {
-    background-color: #ffb803 !important;
-  }
-`;
-
-const DeleteButton = styled.button`
-  background-color: #ce3c3c;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 8px 24px;
-  border-radius: 4px;
-
-  &:hover {
-    background-color: #ff6666;
-  }
-`;
-
-const ToggleButton = styled.button`
-  background-color: #007bff;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 8px 12px;
-  border-radius: 4px;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
 
 const HabitsTable: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -185,12 +60,12 @@ const HabitsTable: React.FC = () => {
         let newScore = habit.score + change;
         let newStatus = habit.status;
 
-        if (newScore >= 5) {
+        if (newScore >= 6) {
           newScore = 0;
           const currentIndex = statusLevels.indexOf(habit.status);
           newStatus =
             statusLevels[Math.min(currentIndex + 1, statusLevels.length - 1)];
-        } else if (newScore <= -5) {
+        } else if (newScore <= -6) {
           newScore = 0;
           const currentIndex = statusLevels.indexOf(habit.status);
           newStatus = statusLevels[Math.max(currentIndex - 1, 0)];
@@ -209,6 +84,29 @@ const HabitsTable: React.FC = () => {
     setUser({ ...user, habits: updatedHabits });
   };
 
+  const isActionAvailable = (habit: Habit) => {
+    const today = new Date();
+    const updateDate = new Date(habit.updateDate);
+
+    switch (habit.updateEntryDur) {
+      case "Daily":
+        return today.toDateString() !== updateDate.toDateString();
+      case "Weekly":
+        const nextWeek = new Date(updateDate);
+        nextWeek.setDate(updateDate.getDate() + 7);
+        return today >= nextWeek;
+      case "Monthly":
+        const nextMonth = new Date(
+          updateDate.getFullYear(),
+          updateDate.getMonth() + 1,
+          updateDate.getDate()
+        );
+        return today >= nextMonth;
+      default:
+        return false;
+    }
+  };
+
   useEffect(() => {
     if (!user) return;
     setUser({ ...user, hideSensitive: hideSensitive });
@@ -216,6 +114,10 @@ const HabitsTable: React.FC = () => {
 
   const handleAddHabit = () => {
     setModalOpen(true);
+  };
+
+  const handleDeleteAccount = () => {
+    localStorage.clear();
   };
 
   const handleSaveHabit = (
@@ -300,23 +202,36 @@ const HabitsTable: React.FC = () => {
                       </DeleteButton>
                     )}
                     {!isEditing && (
-                      <>
-                        <button
-                          disabled={
-                            habit.score === -4 && habit.status === "Struggle"
-                          }
-                          className="action-button"
-                          onClick={() => handleScoreChange(habit.id, -1)}
-                        >
-                          <FontAwesomeIcon icon={faTimesCircle} />
-                        </button>
-                        <button
-                          className="action-button"
-                          onClick={() => handleScoreChange(habit.id, 1)}
-                        >
-                          <FontAwesomeIcon icon={faCheck} />
-                        </button>
-                      </>
+                      <ActionButtonsContainer>
+                        {isActionAvailable(habit) ? (
+                          <>
+                            <button
+                              disabled={
+                                habit.score === -4 &&
+                                habit.status === statusLevels[0]
+                              }
+                              className="action-button"
+                              onClick={() => handleScoreChange(habit.id, -1)}
+                            >
+                              <FontAwesomeIcon icon={faTimesCircle} />
+                            </button>
+                            <button
+                              className="action-button"
+                              onClick={() => handleScoreChange(habit.id, 1)}
+                              disabled={
+                                habit.score === 4 &&
+                                habit.status === statusLevels[3]
+                              }
+                            >
+                              <FontAwesomeIcon icon={faCheck} />
+                            </button>
+                          </>
+                        ) : (
+                          <CheckMark>
+                            <FontAwesomeIcon icon={faCheck} />
+                          </CheckMark>
+                        )}
+                      </ActionButtonsContainer>
                     )}
                   </HabitActions>
                 </Td>
@@ -336,10 +251,17 @@ const HabitsTable: React.FC = () => {
               <FontAwesomeIcon icon={faEdit} />
             )}
           </button>
+          <button
+            className="editBtn"
+            type="button"
+            onClick={handleDeleteAccount}
+          >
+            Delete Account
+          </button>
         </NewHabitSection>
       </ContentWrapper>
 
-      <HabitModal
+      <NewHabitModal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         onSave={handleSaveHabit}

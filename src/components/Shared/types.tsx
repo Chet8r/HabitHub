@@ -1,5 +1,3 @@
-// types.ts
-
 export interface Habit {
   id: number;
   habitName: string;
@@ -27,4 +25,3 @@ export interface User {
   habitLog: HabitLog[];
   hideSensitive: boolean;
 }
-// types.ts

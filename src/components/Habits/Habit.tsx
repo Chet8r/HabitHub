@@ -45,10 +45,10 @@ function Habit() {
       <ContentWrapper>
         <Header>
           <Ul>
-            <Li>0 - Struggle</Li>
-            <Li>1 - Motion</Li>
-            <Li>2 - Momentum</Li>
-            <Li>3 - Habit</Li>
+            <Li>Initiation</Li>
+            <Li>Progress</Li>
+            <Li>Consistency</Li>
+            <Li>Habit</Li>
           </Ul>
         </Header>
         <HabitView />

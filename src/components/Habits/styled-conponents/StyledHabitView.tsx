@@ -53,7 +53,7 @@ export const ContentWrapper = styled.div`
   margin: 20px auto;
 
   @media (max-width: 600px) {
-    padding: 20px;
+    padding: auto;
   }
 `;
 
@@ -71,7 +71,7 @@ export const Table = styled.table`
   margin-bottom: 20px;
 
   @media (max-width: 600px) {
-    font-size: 12px;
+    font-size: 10px;
   }
 `;
 
@@ -152,11 +152,11 @@ export const NewHabitSection = styled.section`
   }
 
   @media (max-width: 600px) {
-    flex-direction: column;
+    justify-content: space-evenly;
 
     button {
       margin-left: 0;
-      margin-top: 10px;
+      margin-top: auto;
     }
   }
 `;

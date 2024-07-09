@@ -9,24 +9,20 @@ const Wrapper = styled.section`
   padding: 0;
   display: flex;
   justify-content: center;
-  height: 92vh;
-
-  @media (max-width: 600px) {
-    overflow: hidden;
-  }
+  height: 100%;
 `;
 
 const ContentWrapper = styled.section`
   width: 90%;
   max-width: 800px;
-  height: 87vh;
+  height: 100%;
   background-color: #0e1e15;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 600px) {
-    height: 90vh;
+    height: 100%;
     padding: 20px 20px 0px 20px;
   }
 `;

@@ -12,6 +12,8 @@ import {
   CheckboxContainer,
   StyledCheckbox,
 } from "./styled-conponents/StyledModal";
+import { habitHubConstants } from "./Constants";
+import { DurationType } from "../Shared/types";
 
 interface NewHabitModalProps {
   isOpen: boolean;
@@ -20,7 +22,7 @@ interface NewHabitModalProps {
     name: string,
     status: string,
     isSensitive: boolean,
-    updateDur: string
+    updateDur: DurationType
   ) => void;
   statusLevels: string[];
   EntryDuration: string[];
@@ -36,7 +38,10 @@ const NewHabitModal: React.FC<NewHabitModalProps> = ({
   const [name, setName] = useState("");
   const [status, setStatus] = useState(statusLevels[0]);
   const [isSensitive, setIsSensitive] = useState(false);
-  const [updateDuration, setUpdateDuration] = useState("");
+  const [updateDuration, setUpdateDuration] = useState<DurationType>({
+    name: habitHubConstants.DAILY,
+    value: 1,
+  });
 
   const handleSave = () => {
     onSave(name, status, isSensitive, updateDuration);
@@ -74,16 +79,37 @@ const NewHabitModal: React.FC<NewHabitModalProps> = ({
           </PropertyCard>
           <PropertyCard>
             <PropertyName>Duration:</PropertyName>
-            <Select
-              value={updateDuration}
-              onChange={(e) => setUpdateDuration(e.target.value)}
-            >
-              {EntryDuration.map((duration) => (
-                <option key={duration} value={duration}>
-                  {duration}
-                </option>
-              ))}
-            </Select>
+            <div className="DurationSelection">
+              <Select
+                value={updateDuration.name}
+                onChange={(e) =>
+                  setUpdateDuration({ ...updateDuration, name: e.target.value })
+                }
+              >
+                {EntryDuration.map((duration) => (
+                  <option key={duration} value={duration}>
+                    {duration}
+                  </option>
+                ))}
+              </Select>
+              {updateDuration.name === habitHubConstants.CUSTOM && (
+                <>
+                  <Input
+                    required
+                    className="marginTop"
+                    placeholder="Enter the number of days (e.g. 12)"
+                    type="text"
+                    value={updateDuration.value}
+                    onChange={(e) =>
+                      setUpdateDuration({
+                        ...updateDuration,
+                        value: Number(e.target.value),
+                      })
+                    }
+                  />
+                </>
+              )}
+            </div>
           </PropertyCard>
           <PropertyCard>
             <PropertyName>Sensitive:</PropertyName>

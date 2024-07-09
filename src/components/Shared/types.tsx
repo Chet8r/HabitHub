@@ -1,3 +1,8 @@
+export interface DurationType {
+  name: string;
+  value: number;
+}
+
 export interface Habit {
   id: number;
   habitName: string;
@@ -5,7 +10,7 @@ export interface Habit {
   score: number;
   updateDate: string;
   sensitive: boolean;
-  updateEntryDur: string;
+  updateEntryDur: DurationType;
 }
 
 export interface HabitLog {

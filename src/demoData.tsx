@@ -21,7 +21,7 @@ export const userData: User = {
       score: 4,
       updateDate: getDateDaysAgo(0), // Today
       sensitive: false,
-      updateEntryDur: habitHubConstants.DAILY,
+      updateEntryDur: { name: habitHubConstants.DAILY, value: 1 },
     },
     {
       id: 2,
@@ -30,7 +30,7 @@ export const userData: User = {
       score: 2,
       updateDate: getDateDaysAgo(1), // Yesterday
       sensitive: false,
-      updateEntryDur: "Daily",
+      updateEntryDur: { name: habitHubConstants.DAILY, value: 1 },
     },
     {
       id: 3,
@@ -39,7 +39,7 @@ export const userData: User = {
       score: 0,
       updateDate: getDateDaysAgo(14), // Two weeks ago
       sensitive: false,
-      updateEntryDur: habitHubConstants.WEEKLY,
+      updateEntryDur: { name: habitHubConstants.WEEKLY, value: 7 },
     },
     {
       id: 4,
@@ -48,7 +48,7 @@ export const userData: User = {
       score: 5,
       updateDate: getDateDaysAgo(30), // A month ago
       sensitive: false,
-      updateEntryDur: habitHubConstants.MONTHLY,
+      updateEntryDur: { name: habitHubConstants.DAILY, value: 1 },
     },
     {
       id: 5,
@@ -57,7 +57,7 @@ export const userData: User = {
       score: 3,
       updateDate: getDateDaysAgo(0), // Today
       sensitive: false,
-      updateEntryDur: habitHubConstants.DAILY,
+      updateEntryDur: { name: habitHubConstants.DAILY, value: 1 },
     },
   ],
   habitLog: [

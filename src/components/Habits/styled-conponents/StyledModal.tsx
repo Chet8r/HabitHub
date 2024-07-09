@@ -104,6 +104,16 @@ export const PropertyCard = styled.div`
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+
+  .DurationSelection {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+  }
+
+  .marginTop {
+    margin-top: 5px !important;
+  }
 `;
 
 export const PropertyName = styled.div`

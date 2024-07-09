@@ -5,10 +5,10 @@ import {
   faTimesCircle,
   faEdit,
   faEyeSlash,
+  faEye,
 } from "@fortawesome/free-solid-svg-icons";
-import { userData } from "../../demoData";
-import { User, Habit } from "../Shared/types";
-import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
+import { getDateDaysAgo, userData } from "../../demoData";
+import { User, Habit, DurationType } from "../Shared/types";
 import NewHabitModal from "./NewHabitModal";
 import {
   ContentWrapper,
@@ -23,11 +23,12 @@ import {
   Tr,
   Wrapper,
   CheckMark,
-  ActionButtonsContainer, // Import the ActionButtonsContainer styled component
+  ActionButtonsContainer,
 } from "./styled-conponents/StyledHabitView";
+import { habitHubConstants } from "./Constants";
 
 const statusLevels = ["Initiation", "Progress", "Consistency", "Habit"];
-const EntryDuration = ["Daily", "Weekly", "Monthly"];
+const EntryDuration = ["Daily", "Weekly", "Monthly", "Custom"];
 
 const HabitsTable: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -60,12 +61,12 @@ const HabitsTable: React.FC = () => {
         let newScore = habit.score + change;
         let newStatus = habit.status;
 
-        if (newScore >= 6) {
+        if (newScore >= 5) {
           newScore = 0;
           const currentIndex = statusLevels.indexOf(habit.status);
           newStatus =
             statusLevels[Math.min(currentIndex + 1, statusLevels.length - 1)];
-        } else if (newScore <= -6) {
+        } else if (newScore <= -5) {
           newScore = 0;
           const currentIndex = statusLevels.indexOf(habit.status);
           newStatus = statusLevels[Math.max(currentIndex - 1, 0)];
@@ -88,20 +89,26 @@ const HabitsTable: React.FC = () => {
     const today = new Date();
     const updateDate = new Date(habit.updateDate);
 
-    switch (habit.updateEntryDur) {
-      case "Daily":
+    switch (habit.updateEntryDur.name) {
+      case habitHubConstants.DAILY:
         return today.toDateString() !== updateDate.toDateString();
-      case "Weekly":
+      case habitHubConstants.WEEKLY:
         const nextWeek = new Date(updateDate);
         nextWeek.setDate(updateDate.getDate() + 7);
         return today >= nextWeek;
-      case "Monthly":
+      case habitHubConstants.MONTHLY:
         const nextMonth = new Date(
           updateDate.getFullYear(),
           updateDate.getMonth() + 1,
           updateDate.getDate()
         );
         return today >= nextMonth;
+      case habitHubConstants.CUSTOM:
+        const customDays = habit.updateEntryDur.value;
+        const nextCustom = new Date(updateDate);
+        nextCustom.setDate(updateDate.getDate() + customDays);
+        return today >= nextCustom;
+
       default:
         return false;
     }
@@ -124,7 +131,7 @@ const HabitsTable: React.FC = () => {
     name: string,
     status: string,
     isSensitive: boolean,
-    updateDur: string
+    updateDur: DurationType
   ) => {
     if (!user) return;
 
@@ -133,7 +140,7 @@ const HabitsTable: React.FC = () => {
       habitName: name,
       status,
       score: 0,
-      updateDate: new Date().toISOString(),
+      updateDate: getDateDaysAgo(updateDur.value),
       sensitive: isSensitive,
       updateEntryDur: updateDur,
     };
@@ -164,7 +171,7 @@ const HabitsTable: React.FC = () => {
           <div className="titleContainer">
             <h1 className="title">Habits</h1>
           </div>
-          <ToggleButton className="eyeContainer " onClick={toggleSensitiveData}>
+          <ToggleButton className="eyeContainer" onClick={toggleSensitiveData}>
             <div className="eyeBtn">
               {hideSensitive ? (
                 <FontAwesomeIcon icon={faEyeSlash} />
@@ -242,7 +249,7 @@ const HabitsTable: React.FC = () => {
 
         <NewHabitSection>
           <button type="button" onClick={handleAddHabit}>
-            New Habit
+            Add Habit
           </button>
           <button className="editBtn" type="button" onClick={handleEdit}>
             {isEditing ? (

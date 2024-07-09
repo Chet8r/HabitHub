@@ -1,5 +1,15 @@
 import styled from "styled-components";
 
+// Common styles
+const buttonStyles = `
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  font-family: "Roboto", sans-serif;
+`;
+
+// Wrapper section
 export const Wrapper = styled.section`
   color: #333;
   display: flex;
@@ -9,6 +19,7 @@ export const Wrapper = styled.section`
   font-family: "Roboto", sans-serif;
 `;
 
+// Checkmark component
 export const CheckMark = styled.div`
   display: inline-flex;
   align-items: center;
@@ -22,87 +33,99 @@ export const CheckMark = styled.div`
   margin: 4px;
 `;
 
+// Action buttons container
 export const ActionButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100px;
 `;
 
+// Content wrapper
+const contentPadding = "30px";
+
 export const ContentWrapper = styled.div`
   width: 90%;
   max-width: 800px;
   background-color: #fff;
-  padding: 30px;
+  padding: ${contentPadding};
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+
+  @media (max-width: 600px) {
+    padding: 20px;
+  }
 `;
 
+// Header section
 export const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-// const TitleContainer = styled.div`
-//   flex: 1; /* Take as much space as possible */
-// `;
-
-// const Title = styled.h1`
-//   margin: 0;
-// `;
-
-// const EyeIcon = styled.div`
-//   font-size: 1.2em;
-// `;
-
+// Table component
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
+
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 `;
 
+// Table header cell
 export const Th = styled.th`
   background-color: #163020;
   color: #fff;
   font-weight: 500;
   padding: 12px;
   text-align: left;
+
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
 `;
 
+// Table data cell
 export const Td = styled.td`
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
 `;
 
+// Table row
 export const Tr = styled.tr`
   &:nth-child(even) {
     background-color: #f2f2f2;
   }
 `;
 
+// Habit actions cell
 export const HabitActions = styled.td`
   .action-button {
     width: 40px;
     background-color: #d8d8d8;
-    border: none;
     color: #3c4043;
-    cursor: pointer;
-    font-size: 14px;
+    ${buttonStyles}
     padding: 8px 12px;
-    border-radius: 4px;
-    font-family: "Roboto", sans-serif;
-  }
 
-  .action-button:first-child {
-    margin-right: 4px;
-  }
+    &:first-child {
+      margin-right: 4px;
+    }
 
-  .action-button:hover {
-    background-color: #e7e7e7;
+    &:hover {
+      background-color: #e7e7e7;
+    }
   }
 `;
 
+// New habit section
 export const NewHabitSection = styled.section`
   display: flex;
   align-items: center;
@@ -111,50 +134,51 @@ export const NewHabitSection = styled.section`
   button {
     margin-left: 10px;
     background-color: green;
-    border: none;
     color: #ffffff;
-    cursor: pointer;
-    font-size: 14px;
+    ${buttonStyles}
     padding: 10px 16px;
-    border-radius: 4px;
-    font-family: "Roboto", sans-serif;
-  }
 
-  button:hover {
-    background-color: #01a501;
+    &:hover {
+      background-color: #01a501;
+    }
   }
 
   .editBtn {
     background-color: orange;
+
+    &:hover {
+      background-color: #ffb803 !important;
+    }
   }
 
-  .editBtn:hover {
-    background-color: #ffb803 !important;
+  @media (max-width: 600px) {
+    flex-direction: column;
+
+    button {
+      margin-left: 0;
+      margin-top: 10px;
+    }
   }
 `;
 
+// Delete button
 export const DeleteButton = styled.button`
   background-color: #ce3c3c;
-  border: none;
   color: white;
-  cursor: pointer;
-  font-size: 14px;
+  ${buttonStyles}
   padding: 8px 24px;
-  border-radius: 4px;
 
   &:hover {
     background-color: #ff6666;
   }
 `;
 
+// Toggle button
 export const ToggleButton = styled.button`
   background-color: #007bff;
-  border: none;
   color: white;
-  cursor: pointer;
-  font-size: 14px;
+  ${buttonStyles}
   padding: 8px 12px;
-  border-radius: 4px;
 
   &:hover {
     background-color: #0056b3;

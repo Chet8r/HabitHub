@@ -26,6 +26,7 @@ import {
   ActionButtonsContainer,
 } from "./styled-conponents/StyledHabitView";
 import { habitHubConstants } from "./Constants";
+import ScoreBar from "./Shared/ScoreBar";
 
 const statusLevels = ["Failing", "Progress", "Consistency", "Habit"];
 const EntryDuration = ["Daily", "Weekly", "Monthly", "Custom"];
@@ -200,7 +201,10 @@ const HabitsTable: React.FC = () => {
                     : habit.habitName}
                 </Td>
                 <Td>{habit.status}</Td>
-                <Td>{habit.score}</Td>
+                <Td>
+                  <ScoreBar score={habit.score} />{" "}
+                  {/* Use ScoreBar component */}
+                </Td>
                 <Td>
                   <HabitActions>
                     {isEditing && (

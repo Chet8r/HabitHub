@@ -18,11 +18,6 @@ export interface HabitLog {
   name: string;
 }
 
-export interface HabitLog {
-  id: number;
-  name: string;
-}
-
 export interface User {
   userId: number;
   firstname: string;

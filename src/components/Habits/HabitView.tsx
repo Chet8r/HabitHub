@@ -27,7 +27,7 @@ import {
 } from "./styled-conponents/StyledHabitView";
 import { habitHubConstants } from "./Constants";
 
-const statusLevels = ["Initiation", "Progress", "Consistency", "Habit"];
+const statusLevels = ["Failing", "Progress", "Consistency", "Habit"];
 const EntryDuration = ["Daily", "Weekly", "Monthly", "Custom"];
 
 const HabitsTable: React.FC = () => {
@@ -114,19 +114,6 @@ const HabitsTable: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (!user) return;
-    setUser({ ...user, hideSensitive: hideSensitive });
-  }, [hideSensitive]);
-
-  const handleAddHabit = () => {
-    setModalOpen(true);
-  };
-
-  const handleDeleteAccount = () => {
-    localStorage.clear();
-  };
-
   const handleSaveHabit = (
     name: string,
     status: string,
@@ -147,6 +134,19 @@ const HabitsTable: React.FC = () => {
 
     setUser({ ...user, habits: [...user.habits, newHabit] });
     setModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (!user) return;
+    setUser({ ...user, hideSensitive: hideSensitive });
+  }, [hideSensitive]);
+
+  const handleAddHabit = () => {
+    setModalOpen(true);
+  };
+
+  const handleDeleteAccount = () => {
+    localStorage.clear();
   };
 
   const handleDeleteHabit = (id: number) => {

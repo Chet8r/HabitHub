@@ -7,6 +7,7 @@ const Wrapper = styled.nav`
   height: 60px; /* Adjust height as needed */
   background-color: #f0f8f7; /* Light greenish-white background */
   padding: 0 20px; /* Horizontal padding */
+  overflow: hidden;
 `;
 
 const Logo = styled.div`

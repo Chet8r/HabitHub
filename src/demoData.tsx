@@ -1,7 +1,7 @@
 // demoData.ts
 
 import { User } from "./components/Shared/types";
-import { habitHubConstants } from "./components/Habits/Constants";
+import { habitHubConstants, StatusLevel } from "./components/Habits/Constants";
 
 export const getDateDaysAgo = (days: number): string => {
   const date = new Date();
@@ -16,8 +16,8 @@ export const userData: User = {
   habits: [
     {
       id: 1,
-      habitName: "Exercise",
-      status: "Habit",
+      habitName: "Workout",
+      status: StatusLevel.Consistency,
       score: 4,
       updateDate: getDateDaysAgo(0), // Today
       sensitive: false,
@@ -25,38 +25,29 @@ export const userData: User = {
     },
     {
       id: 2,
-      habitName: "Read a book",
-      status: "Momentum",
-      score: 2,
-      updateDate: getDateDaysAgo(1), // Yesterday
-      sensitive: false,
-      updateEntryDur: { name: habitHubConstants.DAILY, value: 1 },
-    },
-    {
-      id: 3,
       habitName: "Meditate",
-      status: "Struggle",
+      status: StatusLevel.Failing,
       score: 0,
       updateDate: getDateDaysAgo(14), // Two weeks ago
       sensitive: false,
       updateEntryDur: { name: habitHubConstants.WEEKLY, value: 7 },
     },
     {
-      id: 4,
-      habitName: "Drink Water",
-      status: "Habit",
-      score: 5,
-      updateDate: getDateDaysAgo(30), // A month ago
+      id: 3,
+      habitName: "Sleep 11am",
+      status: StatusLevel.Progress,
+      score: 2,
+      updateDate: getDateDaysAgo(1), // Yesterday
       sensitive: false,
       updateEntryDur: { name: habitHubConstants.DAILY, value: 1 },
     },
     {
-      id: 5,
-      habitName: "Sleep Early",
-      status: "Momentum",
+      id: 4,
+      habitName: "Shorts Scrolling",
+      status: StatusLevel.Failing,
       score: 3,
       updateDate: getDateDaysAgo(0), // Today
-      sensitive: false,
+      sensitive: true,
       updateEntryDur: { name: habitHubConstants.DAILY, value: 1 },
     },
   ],

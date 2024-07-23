@@ -2,14 +2,14 @@ import styled from "styled-components";
 import HabitView from "./HabitView";
 
 const Wrapper = styled.section`
-  overflow: auto;
+  overflow: hidden;
   background-color: #163020;
   color: white;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
-  height: 100%;
+  height: 100vh;
 `;
 
 const ContentWrapper = styled.section`
@@ -23,7 +23,7 @@ const ContentWrapper = styled.section`
 
   @media (max-width: 600px) {
     height: 100%;
-    padding: 20px 20px 0px 20px;
+    padding: 30px 20px 0px 20px;
   }
 `;
 
@@ -58,7 +58,7 @@ function Habit() {
       <ContentWrapper>
         <Header>
           <Ul>
-            <Li>Initiation</Li>
+            <Li>Failing</Li>
             <Li>Progress</Li>
             <Li>Consistency</Li>
             <Li>Habit</Li>

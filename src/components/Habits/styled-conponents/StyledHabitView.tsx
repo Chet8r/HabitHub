@@ -59,9 +59,14 @@ export const ContentWrapper = styled.div`
 
 // Header section
 export const Header = styled.header`
+  height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  .title {
+    font-size: medium;
+  }
 `;
 
 // Table component
@@ -79,7 +84,7 @@ export const Table = styled.table`
 export const Th = styled.th`
   background-color: #163020;
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
   padding: 12px;
   text-align: left;
 
@@ -90,12 +95,14 @@ export const Th = styled.th`
 
 // Table data cell
 export const Td = styled.td`
+  min-width: 150px !important;
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 
   @media (max-width: 600px) {
-    padding: 10px;
+    padding: 8px;
+    min-width: 0px !important;
   }
 `;
 

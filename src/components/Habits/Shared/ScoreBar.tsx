@@ -1,6 +1,4 @@
-import React from "react";
 import styled from "styled-components";
-import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
 const BarContainer = styled.div`
   display: flex;

@@ -63,7 +63,6 @@ export const ActionButtonsContainer = styled.div`
 `;
 
 // Content wrapper
-const contentPadding = "30px";
 
 export const ContentWrapper = styled.div`
   display: flex;
@@ -73,7 +72,7 @@ export const ContentWrapper = styled.div`
   max-width: 800px;
 
   background-color: #fff;
-  padding: ${contentPadding};
+  padding: 15px 30px 30px 30px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: px auto;
@@ -86,13 +85,13 @@ export const ContentWrapper = styled.div`
 
 // Header section
 export const Header = styled.header`
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
   .title {
     font-size: medium;
+  }
+
+  h2 {
+    margin-bottom: 10px;
+    padding: 0px;
   }
 `;
 

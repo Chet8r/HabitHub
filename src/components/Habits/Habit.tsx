@@ -13,11 +13,6 @@ function Habit() {
   );
   return (
     <HabitRouteWrapper>
-      {friendActivityVisible && (
-        <HabitFriendWrapper>
-          <FriendActivity />
-        </HabitFriendWrapper>
-      )}
       <HabitContentWrapper>
         <HabitView />
       </HabitContentWrapper>

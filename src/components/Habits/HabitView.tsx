@@ -174,7 +174,7 @@ const HabitsTable: React.FC = () => {
       <ContentWrapper>
         <Header>
           <div className="titleContainer">
-            <h1 className="title">Habits</h1>
+            <h2 className="title">Habits</h2>
           </div>
         </Header>
 
@@ -204,9 +204,13 @@ const HabitsTable: React.FC = () => {
                 <Td>
                   <HabitActions>
                     {isEditing && (
-                      <DeleteButton onClick={() => handleDeleteHabit(habit.id)}>
-                        Delete
-                      </DeleteButton>
+                      <ActionButtonsContainer>
+                        <DeleteButton
+                          onClick={() => handleDeleteHabit(habit.id)}
+                        >
+                          Delete
+                        </DeleteButton>
+                      </ActionButtonsContainer>
                     )}
                     {!isEditing && (
                       <ActionButtonsContainer>

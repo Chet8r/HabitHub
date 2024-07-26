@@ -32,6 +32,10 @@ export const ModalContent = styled.div`
   @media (min-width: 1024px) {
     width: 40vw;
   }
+
+  @media (max-width: 900px) {
+    width: auto;
+  }
 `;
 
 export const ModalHeader = styled.h2`

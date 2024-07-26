@@ -5,9 +5,9 @@ import { toggleFriendActivity } from "../Actions/actions";
 
 const ActivityContainer = styled.div`
   width: 15vw;
-  min-width: 250px;
+  /* min-width: 250px; */
   padding: 20px;
-  background-color: #121212;
+  background-color: #272727;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   border-radius: 10px;
@@ -15,7 +15,7 @@ const ActivityContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1400px) {
     display: none;
   }
 `;

@@ -11,11 +11,12 @@ const buttonStyles = `
 
 // Wrapper section
 export const Wrapper = styled.section`
+  /* width: 100%; */
   color: #333;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0px;
+  /* padding: 10px; */
   font-family: "Roboto", sans-serif;
 `;
 
@@ -45,7 +46,7 @@ export const ActionButtonsContainer = styled.div`
   width: 100px;
 
   .action-button.highlight-red {
-    background-color: #cd0000;
+    background-color: darkred;
     color: white;
     &:hover {
       background-color: red !important;
@@ -53,10 +54,10 @@ export const ActionButtonsContainer = styled.div`
   }
 
   .action-button.highlight-green {
-    background-color: green;
+    background-color: darkgreen;
     color: white;
     &:hover {
-      background-color: #00aa00 !important;
+      background-color: green !important;
     }
   }
 `;
@@ -65,8 +66,12 @@ export const ActionButtonsContainer = styled.div`
 const contentPadding = "30px";
 
 export const ContentWrapper = styled.div`
-  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60vw;
   max-width: 800px;
+
   background-color: #fff;
   padding: ${contentPadding};
   border-radius: 10px;
@@ -75,6 +80,7 @@ export const ContentWrapper = styled.div`
 
   @media (max-width: 900px) {
     padding: auto;
+    width: 100%;
   }
 `;
 
@@ -92,9 +98,9 @@ export const Header = styled.header`
 
 // Table component
 export const Table = styled.table`
-  width: 100%;
+  /* margin-right: 20px; */
+  width: auto;
   border-collapse: collapse;
-  margin-bottom: 20px;
 
   @media (max-width: 900px) {
     font-size: 10px;
@@ -116,8 +122,8 @@ export const Th = styled.th`
 
 // Table data cell
 export const Td = styled.td`
-  min-width: 150px !important;
-  padding: 12px;
+  width: 8vw;
+  padding: 12px; //Table sizing
   text-align: left;
   border-bottom: 1px solid #ddd;
 
@@ -174,6 +180,13 @@ export const NewHabitSection = styled.section`
     }
   }
 
+  .RestBtn {
+    background-color: darkred;
+    &:hover {
+      background-color: red !important;
+    }
+  }
+
   .editBtn {
     background-color: orange;
 
@@ -194,13 +207,13 @@ export const NewHabitSection = styled.section`
 
 // Delete button
 export const DeleteButton = styled.button`
-  background-color: #ce3c3c;
+  background-color: darkred;
   color: white;
   ${buttonStyles}
   padding: 8px 24px;
 
   &:hover {
-    background-color: #ff6666;
+    background-color: red;
   }
 `;
 
@@ -214,4 +227,29 @@ export const ToggleButton = styled.button`
   &:hover {
     background-color: #0056b3;
   }
+`;
+
+export const HabitRouteWrapper = styled.section`
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #1f3227;
+  margin: 0;
+  padding: 10px;
+  height: 100vh;
+`;
+
+export const HabitContentWrapper = styled.section`
+  width: 100%;
+  @media (max-width: 900px) {
+    height: 90%;
+    padding: 0px 20px 0px 20px;
+  }
+`;
+
+export const HabitFriendWrapper = styled.section`
+  display: flex;
+  justify-content: end;
+  flex: 3;
 `;

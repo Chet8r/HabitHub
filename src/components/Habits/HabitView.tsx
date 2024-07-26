@@ -256,19 +256,20 @@ const HabitsTable: React.FC = () => {
           <button type="button" onClick={handleAddHabit}>
             Add Habit
           </button>
-          <button
-            className="editBtn"
-            type="button"
-            onClick={handleDeleteAccount}
-          >
-            Delete Account
-          </button>
+
           <button className="editBtn" type="button" onClick={handleEdit}>
             {isEditing ? (
               <FontAwesomeIcon icon={faCheck} />
             ) : (
               <FontAwesomeIcon icon={faEdit} />
             )}
+          </button>
+          <button
+            className="RestBtn"
+            type="button"
+            onClick={handleDeleteAccount}
+          >
+            Reset
           </button>
         </NewHabitSection>
       </ContentWrapper>

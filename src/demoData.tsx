@@ -15,6 +15,15 @@ export const userData: User = {
   hideSensitive: false,
   habits: [
     {
+      id: 0,
+      habitName: "Demo Habit",
+      status: StatusLevel.Failing,
+      score: 0,
+      updateDate: getDateDaysAgo(0), // Today
+      sensitive: false,
+      updateEntryDur: { name: habitHubConstants.CUSTOM, value: 0 },
+    },
+    {
       id: 1,
       habitName: "Workout",
       status: StatusLevel.Consistency,
@@ -34,7 +43,7 @@ export const userData: User = {
     },
     {
       id: 3,
-      habitName: "Sleep 11am",
+      habitName: "Sleep 11pm",
       status: StatusLevel.Progress,
       score: 2,
       updateDate: getDateDaysAgo(1), // Yesterday
@@ -62,3 +71,27 @@ export const userData: User = {
     },
   ],
 };
+
+export const friends = [
+  {
+    id: 1,
+    name: "Alice",
+    lastActive: "2 hr",
+    scoreUp: 5,
+    scoreDown: 3,
+  },
+  {
+    id: 2,
+    name: "Bob",
+    lastActive: "13 hr",
+    scoreUp: 2,
+    scoreDown: 6,
+  },
+  {
+    id: 3,
+    name: "Charlie",
+    lastActive: "5 hr",
+    scoreUp: 4,
+    scoreDown: 1,
+  },
+];

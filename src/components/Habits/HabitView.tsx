@@ -4,8 +4,6 @@ import {
   faCheck,
   faTimesCircle,
   faEdit,
-  faEyeSlash,
-  faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { getDateDaysAgo, userData } from "../../demoData";
 import { User, Habit, DurationType } from "../Shared/types";
@@ -19,7 +17,6 @@ import {
   Table,
   Td,
   Th,
-  ToggleButton,
   Tr,
   Wrapper,
   CheckMark,
@@ -27,15 +24,26 @@ import {
 } from "./styled-conponents/StyledHabitView";
 import { habitHubConstants } from "./Constants";
 import ScoreBar from "./Shared/ScoreBar";
+import { useSelector } from "react-redux";
 
 const statusLevels = ["Failing", "Progress", "Consistency", "Habit"];
-const EntryDuration = ["Daily", "Weekly", "Monthly", "Custom"];
+// const EntryDuration = ["Daily", "Weekly", "Monthly", "Custom"];
+const EntryDuration: DurationType[] = [
+  { name: "Daily", value: 1 },
+  { name: "Weekly", value: 7 },
+  { name: "Monthly", value: 30 },
+  { name: "Custom", value: 0 },
+];
 
 const HabitsTable: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isEditing, setEditing] = useState(false);
   const [hideSensitive, setHideSensitive] = useState(false);
+
+  const sensitiveDataHidden = useSelector(
+    (state: any) => state.sensitiveDataHidden
+  );
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -62,12 +70,12 @@ const HabitsTable: React.FC = () => {
         let newScore = habit.score + change;
         let newStatus = habit.status;
 
-        if (newScore >= 5) {
+        if (newScore >= 6) {
           newScore = 0;
           const currentIndex = statusLevels.indexOf(habit.status);
           newStatus =
             statusLevels[Math.min(currentIndex + 1, statusLevels.length - 1)];
-        } else if (newScore <= -5) {
+        } else if (newScore <= -6) {
           newScore = 0;
           const currentIndex = statusLevels.indexOf(habit.status);
           newStatus = statusLevels[Math.max(currentIndex - 1, 0)];
@@ -161,10 +169,6 @@ const HabitsTable: React.FC = () => {
     setEditing(!isEditing);
   };
 
-  const toggleSensitiveData = () => {
-    setHideSensitive(!hideSensitive);
-  };
-
   return (
     <Wrapper>
       <ContentWrapper>
@@ -172,20 +176,11 @@ const HabitsTable: React.FC = () => {
           <div className="titleContainer">
             <h1 className="title">Habits</h1>
           </div>
-          <ToggleButton className="eyeContainer" onClick={toggleSensitiveData}>
-            <div className="eyeBtn">
-              {hideSensitive ? (
-                <FontAwesomeIcon icon={faEyeSlash} />
-              ) : (
-                <FontAwesomeIcon icon={faEye} />
-              )}
-            </div>
-          </ToggleButton>
         </Header>
 
         <Table>
-          <thead>
-            <tr>
+          <thead className="thead">
+            <tr className="">
               <Th>Name</Th>
               <Th>Status</Th>
               <Th>Score</Th>
@@ -193,10 +188,11 @@ const HabitsTable: React.FC = () => {
             </tr>
           </thead>
           <tbody>
+            {/* <EnableScroll> */}
             {user?.habits.map((habit) => (
               <Tr key={habit.id}>
                 <Td>
-                  {hideSensitive && habit.sensitive
+                  {sensitiveDataHidden && habit.sensitive
                     ? "HIDDEN"
                     : habit.habitName}
                 </Td>
@@ -218,19 +214,23 @@ const HabitsTable: React.FC = () => {
                           <>
                             <button
                               disabled={
-                                habit.score === -4 &&
+                                habit.score === -5 &&
                                 habit.status === statusLevels[0]
                               }
-                              className="action-button"
+                              className={`action-button ${
+                                habit.score === -5 ? "highlight-red" : ""
+                              }`}
                               onClick={() => handleScoreChange(habit.id, -1)}
                             >
                               <FontAwesomeIcon icon={faTimesCircle} />
                             </button>
                             <button
-                              className="action-button"
+                              className={`action-button ${
+                                habit.score === 5 ? "highlight-green" : ""
+                              }`}
                               onClick={() => handleScoreChange(habit.id, 1)}
                               disabled={
-                                habit.score === 4 &&
+                                habit.score === 5 &&
                                 habit.status === statusLevels[3]
                               }
                             >
@@ -248,6 +248,7 @@ const HabitsTable: React.FC = () => {
                 </Td>
               </Tr>
             ))}
+            {/* </EnableScroll> */}
           </tbody>
         </Table>
 
@@ -255,19 +256,19 @@ const HabitsTable: React.FC = () => {
           <button type="button" onClick={handleAddHabit}>
             Add Habit
           </button>
-          <button className="editBtn" type="button" onClick={handleEdit}>
-            {isEditing ? (
-              <FontAwesomeIcon icon={faCheck} />
-            ) : (
-              <FontAwesomeIcon icon={faEdit} />
-            )}
-          </button>
           <button
             className="editBtn"
             type="button"
             onClick={handleDeleteAccount}
           >
             Delete Account
+          </button>
+          <button className="editBtn" type="button" onClick={handleEdit}>
+            {isEditing ? (
+              <FontAwesomeIcon icon={faCheck} />
+            ) : (
+              <FontAwesomeIcon icon={faEdit} />
+            )}
           </button>
         </NewHabitSection>
       </ContentWrapper>

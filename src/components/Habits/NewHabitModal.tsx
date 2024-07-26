@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import {
   ModalBackdrop,
   ModalContent,
@@ -25,7 +25,7 @@ interface NewHabitModalProps {
     updateDur: DurationType
   ) => void;
   statusLevels: string[];
-  EntryDuration: string[];
+  EntryDuration: DurationType[];
 }
 
 const NewHabitModal: React.FC<NewHabitModalProps> = ({
@@ -39,7 +39,7 @@ const NewHabitModal: React.FC<NewHabitModalProps> = ({
   const [status, setStatus] = useState(statusLevels[0]);
   const [isSensitive, setIsSensitive] = useState(false);
   const [updateDuration, setUpdateDuration] = useState<DurationType>({
-    name: habitHubConstants.DAILY,
+    name: "Daily",
     value: 1,
   });
 
@@ -53,6 +53,16 @@ const NewHabitModal: React.FC<NewHabitModalProps> = ({
   if (!isOpen) {
     return null;
   }
+
+  const handleDurationChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const selectedName = e.target.value;
+    const selectedDuration = EntryDuration.find(
+      (duration) => duration.name === selectedName
+    );
+    if (selectedDuration) {
+      setUpdateDuration({ name: selectedName, value: selectedDuration.value });
+    }
+  };
 
   return (
     <ModalBackdrop>
@@ -82,13 +92,11 @@ const NewHabitModal: React.FC<NewHabitModalProps> = ({
             <div className="DurationSelection">
               <Select
                 value={updateDuration.name}
-                onChange={(e) =>
-                  setUpdateDuration({ ...updateDuration, name: e.target.value })
-                }
+                onChange={handleDurationChange}
               >
                 {EntryDuration.map((duration) => (
-                  <option key={duration} value={duration}>
-                    {duration}
+                  <option key={duration.value} value={duration.name}>
+                    {duration.name}
                   </option>
                 ))}
               </Select>

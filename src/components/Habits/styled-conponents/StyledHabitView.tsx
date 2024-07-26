@@ -15,8 +15,13 @@ export const Wrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 0px;
   font-family: "Roboto", sans-serif;
+`;
+
+export const EnableScroll = styled.section`
+  /* max-height: 425px;
+  overflow-y: scroll; */
 `;
 
 // Checkmark component
@@ -38,6 +43,22 @@ export const ActionButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100px;
+
+  .action-button.highlight-red {
+    background-color: #cd0000;
+    color: white;
+    &:hover {
+      background-color: red !important;
+    }
+  }
+
+  .action-button.highlight-green {
+    background-color: green;
+    color: white;
+    &:hover {
+      background-color: #00aa00 !important;
+    }
+  }
 `;
 
 // Content wrapper
@@ -50,9 +71,9 @@ export const ContentWrapper = styled.div`
   padding: ${contentPadding};
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
+  margin: px auto;
 
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     padding: auto;
   }
 `;
@@ -75,7 +96,7 @@ export const Table = styled.table`
   border-collapse: collapse;
   margin-bottom: 20px;
 
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     font-size: 10px;
   }
 `;
@@ -88,7 +109,7 @@ export const Th = styled.th`
   padding: 12px;
   text-align: left;
 
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     padding: 10px;
   }
 `;
@@ -100,7 +121,7 @@ export const Td = styled.td`
   text-align: left;
   border-bottom: 1px solid #ddd;
 
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     padding: 8px;
     min-width: 0px !important;
   }
@@ -134,12 +155,15 @@ export const HabitActions = styled.td`
 
 // New habit section
 export const NewHabitSection = styled.section`
+  padding: 10px;
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+
+  justify-content: space-between;
+  background-color: #ffffff;
 
   button {
-    margin-left: 10px;
+    /* margin-left: 10px; */
     background-color: green;
     color: #ffffff;
     ${buttonStyles}
@@ -158,7 +182,7 @@ export const NewHabitSection = styled.section`
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     justify-content: space-evenly;
 
     button {

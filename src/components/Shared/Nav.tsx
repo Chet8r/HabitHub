@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { ToggleButton } from "../Habits/styled-conponents/StyledHabitView";
+import {
+  FriendButton,
+  ToggleButton,
+} from "../Habits/styled-conponents/StyledHabitView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -20,10 +23,6 @@ const Wrapper = styled.nav`
   background-color: #f0f8f7; /* Light greenish-white background */
   padding: 0 20px; /* Horizontal padding */
   overflow: hidden;
-
-  .friendContainer {
-    margin: 0px 10px 0px 10px;
-  }
 `;
 
 const Logo = styled.div`
@@ -41,7 +40,8 @@ const NavLinks = styled.ul`
 `;
 
 const NavItem = styled.li`
-  margin-left: 20px; /* Adjust spacing between items */
+  display: flex;
+  gap: 10px;
 `;
 
 // const StyledLink = styled.a`
@@ -85,14 +85,14 @@ function Nav() {
               )}
             </div>
           </ToggleButton>
-          <ToggleButton
+          <FriendButton
             className="friendContainer"
             onClick={() => dispatch(toggleFriendActivity())}
           >
             <div className="friendBtn">
               <FontAwesomeIcon icon={faUserFriends} />
             </div>
-          </ToggleButton>
+          </FriendButton>
           <ToggleButton>Account</ToggleButton>
         </NavItem>
       </NavLinks>

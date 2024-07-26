@@ -228,15 +228,29 @@ export const ToggleButton = styled.button`
   }
 `;
 
+export const FriendButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  ${buttonStyles}
+  padding: 8px 12px;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  @media (max-width: 1400px) {
+    display: none;
+  }
+`;
+
 export const HabitRouteWrapper = styled.section`
   display: flex;
   gap: 6px;
   justify-content: center;
-  overflow: hidden;
   background-color: #1f3227;
   margin: 0;
   padding: 10px;
-  height: 100vh;
+  height: 95vh;
 `;
 
 export const HabitContentWrapper = styled.section`

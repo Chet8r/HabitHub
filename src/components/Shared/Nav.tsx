@@ -44,22 +44,6 @@ const NavItem = styled.li`
   gap: 10px;
 `;
 
-// const StyledLink = styled.a`
-//   color: #163020; /* Dark greenish color */
-//   text-decoration: none;
-//   padding: 20px 16px; //Padding inside each link
-//   transition: background-color 0.3s; /* Smooth background color transition */
-
-//   &:hover {
-//     border-radius: 5%;
-//     background-color: #becdbe; /* Light gray background on hover */
-//   }
-// `;
-
-// const AccountLink = styled(StyledLink)`
-//   font-weight: bold; /* Bold font weight for emphasis */
-// `;
-
 function Nav() {
   const dispatch = useDispatch();
   const sensitiveDataHidden = useSelector(

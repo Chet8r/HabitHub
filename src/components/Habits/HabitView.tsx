@@ -24,10 +24,10 @@ import {
 } from "./styled-conponents/StyledHabitView";
 import { habitHubConstants } from "./Constants";
 import ScoreBar from "./Shared/ScoreBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleSensitiveData } from "./Actions/actions";
 
 const statusLevels = ["Failing", "Progress", "Consistency", "Habit"];
-// const EntryDuration = ["Daily", "Weekly", "Monthly", "Custom"];
 const EntryDuration: DurationType[] = [
   { name: "Daily", value: 1 },
   { name: "Weekly", value: 7 },
@@ -39,7 +39,8 @@ const HabitsTable: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isEditing, setEditing] = useState(false);
-  const [hideSensitive, setHideSensitive] = useState(false);
+
+  const dispatch = useDispatch();
 
   const sensitiveDataHidden = useSelector(
     (state: any) => state.sensitiveDataHidden
@@ -59,7 +60,8 @@ const HabitsTable: React.FC = () => {
       localStorage.setItem("user", JSON.stringify(user));
     }
 
-    if (user) setHideSensitive(user?.hideSensitive);
+    if (user && user.hideSensitive != sensitiveDataHidden)
+      dispatch(toggleSensitiveData());
   }, [user]);
 
   const handleScoreChange = (id: number, change: number) => {
@@ -147,8 +149,8 @@ const HabitsTable: React.FC = () => {
 
   useEffect(() => {
     if (!user) return;
-    setUser({ ...user, hideSensitive: hideSensitive });
-  }, [hideSensitive]);
+    setUser({ ...user, hideSensitive: sensitiveDataHidden });
+  }, [sensitiveDataHidden]);
 
   const handleAddHabit = () => {
     setModalOpen(true);
@@ -192,7 +194,7 @@ const HabitsTable: React.FC = () => {
             {user?.habits.map((habit) => (
               <Tr key={habit.id}>
                 <Td>
-                  {sensitiveDataHidden && habit.sensitive
+                  {user.hideSensitive && habit.sensitive
                     ? "HIDDEN"
                     : habit.habitName}
                 </Td>

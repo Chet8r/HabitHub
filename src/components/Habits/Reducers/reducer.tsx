@@ -10,7 +10,7 @@ export interface AppState {
 
 const initialState: AppState = {
   sensitiveDataHidden: false,
-  friendActivityVisible: true,
+  friendActivityVisible: false,
 };
 
 interface Action {

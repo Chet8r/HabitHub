@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-const API_URL = "https://your-backend-api-url.com/api"; // Replace with your backend API URL
+const API_URL = "https://habithub-server-ac53ab369ec1.herokuapp.com/api"; // Replace with your backend API URL
 
 interface UserData {
   firstname?: string;
@@ -20,7 +20,7 @@ export const registerUser = async (
 ): Promise<ApiResponse> => {
   try {
     const response: AxiosResponse<ApiResponse> = await axios.post(
-      `${API_URL}/register`,
+      `${API_URL}/auth/register`,
       userData
     );
     return response.data;
@@ -32,7 +32,7 @@ export const registerUser = async (
 export const loginUser = async (userData: UserData): Promise<ApiResponse> => {
   try {
     const response: AxiosResponse<ApiResponse> = await axios.post(
-      `${API_URL}/login`,
+      `${API_URL}/auth/login`,
       userData
     );
     return response.data;

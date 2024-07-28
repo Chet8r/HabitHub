@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import styled from "styled-components";
 import backgroundImage from "../../../public/bg.jpeg"; // Ensure to provide the correct path
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "./account";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -147,7 +148,7 @@ const RightSection = styled.div`
   background: rgba(0, 0, 0, 0.5);
 
   @media (max-width: 768px) {
-    padding-top: 15vh;
+    padding-top: 20vh;
     background: rgba(0, 0, 0, 0.5);
     align-items: start;
   }
@@ -226,7 +227,7 @@ const Login: React.FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!formData.email || !formData.password) {
@@ -234,13 +235,14 @@ const Login: React.FC = () => {
       return;
     }
 
-    setError("");
-    console.log("Login successful", formData);
-  };
-
-  const navigateToRegister = () => {
-    console.log("reached");
-    navigate("/register");
+    try {
+      const data = await loginUser(formData);
+      console.log("Login successful", data);
+      // Handle successful login (e.g., save token, redirect, etc.)
+      navigate("/");
+    } catch (err: any) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -259,7 +261,9 @@ const Login: React.FC = () => {
             If you don't have a login yet, click below to activate your account
             today.
           </Description>
-          <RegisterButton onClick={navigateToRegister}>Register</RegisterButton>
+          <RegisterButton onClick={() => navigate("/register")}>
+            Register
+          </RegisterButton>
         </MiddleContent>
       </LeftSection>
       <RightSection>
@@ -282,7 +286,7 @@ const Login: React.FC = () => {
           />
           <Button type="submit">Login</Button>
           <Text className="mobileView">OR</Text>
-          <Button onClick={navigateToRegister} className="mobileView">
+          <Button onClick={() => navigate("/register")} className="mobileView">
             Register
           </Button>
           <Text>

@@ -1,6 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import styled from "styled-components";
 import backgroundImage from "../../../public/bg.jpeg"; // Ensure to provide the correct path
+import { useNavigate } from "react-router-dom";
+import { registerUser } from "./account";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -17,23 +19,32 @@ const FormWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  padding-bottom: 130px;
+  padding-bottom: 20vh;
   border-radius: 8px;
   max-width: 400px;
   width: 100%;
   text-align: center;
   @media (max-width: 768px) {
-    width: 80%;
+    width: 70%;
+  }
+
+  @media (max-height: 700px) {
+    padding-bottom: 0px;
   }
 `;
 
 const LogoWrapper = styled.div`
   padding-top: 50px;
   display: block;
+
+  @media (max-height: 500px) {
+    display: none;
+  }
 `;
 
 const Logo = styled.h1`
   color: white;
+  font-size: 30px;
 `;
 
 const Title = styled.h2`
@@ -75,6 +86,22 @@ const Button = styled.button`
   }
 `;
 
+const Text = styled.p`
+  font-size: 12px;
+  max-width: 400px;
+  text-align: center;
+  padding: 0px 0px 10px 0px;
+  color: white;
+
+  text {
+    color: orange;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+  }
+`;
+
 const ErrorMessage = styled.div`
   color: red;
   margin: 10px 0;
@@ -88,6 +115,7 @@ interface FormData {
 }
 
 const Register: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     firstname: "",
     email: "",
@@ -100,10 +128,14 @@ const Register: React.FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.password || !formData.confirmPassword) {
+    if (
+      !formData.firstname ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
       setError("All fields are required");
       return;
     }
@@ -113,8 +145,18 @@ const Register: React.FC = () => {
       return;
     }
 
-    setError("");
-    console.log("Registration successful", formData);
+    try {
+      const data = await registerUser(formData);
+      console.log("Registration successful", data);
+      // Handle successful registration (e.g., redirect to login)
+      navigate("/login");
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
+  const navigateToLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -128,7 +170,7 @@ const Register: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <Input
             type="name"
-            name="name"
+            name="firstname"
             placeholder="First Name"
             value={formData.firstname}
             onChange={handleChange}
@@ -155,6 +197,10 @@ const Register: React.FC = () => {
             onChange={handleChange}
           />
           <Button type="submit">Register</Button>
+          <Text>
+            Already have an account?{" "}
+            <text onClick={navigateToLogin}>Login here.</text>
+          </Text>
         </form>
       </FormWrapper>
     </PageWrapper>

@@ -9,18 +9,20 @@ import { getDateDaysAgo, userData } from "../../demoData";
 import { User, Habit, DurationType } from "../Shared/types";
 import NewHabitModal from "./NewHabitModal";
 import {
-  ContentWrapper,
-  DeleteButton,
-  HabitActions,
-  Header,
-  NewHabitSection,
-  Table,
-  Td,
-  Th,
-  Tr,
   Wrapper,
-  CheckMark,
+  ContentWrapper,
+  Header,
+  Table,
+  Th,
+  Td,
+  Tr,
+  HabitActions,
   ActionButtonsContainer,
+  CheckMark,
+  NewHabitSection,
+  DeleteButton,
+  TableWrapper,
+  TableHeader,
 } from "./styled-conponents/StyledHabitView";
 import { habitHubConstants } from "./Constants";
 import ScoreBar from "./Shared/ScoreBar";
@@ -60,7 +62,7 @@ const HabitsTable: React.FC = () => {
       localStorage.setItem("user", JSON.stringify(user));
     }
 
-    if (user && user.hideSensitive != sensitiveDataHidden)
+    if (user && user.hideSensitive !== sensitiveDataHidden)
       dispatch(toggleSensitiveData());
   }, [user]);
 
@@ -180,83 +182,84 @@ const HabitsTable: React.FC = () => {
           </div>
         </Header>
 
-        <Table>
+        <TableHeader>
           <thead className="thead">
-            <tr className="">
+            <tr className="tHeader">
               <Th>Name</Th>
               <Th>Status</Th>
               <Th>Score</Th>
               <Th>Actions</Th>
             </tr>
           </thead>
-          <tbody>
-            {/* <EnableScroll> */}
-            {user?.habits.map((habit) => (
-              <Tr key={habit.id}>
-                <Td>
-                  {user.hideSensitive && habit.sensitive
-                    ? "HIDDEN"
-                    : habit.habitName}
-                </Td>
-                <Td>{habit.status}</Td>
-                <Td>
-                  <ScoreBar score={habit.score} />{" "}
-                  {/* Use ScoreBar component */}
-                </Td>
-                <Td>
-                  <HabitActions>
-                    {isEditing && (
-                      <ActionButtonsContainer>
-                        <DeleteButton
-                          onClick={() => handleDeleteHabit(habit.id)}
-                        >
-                          Delete
-                        </DeleteButton>
-                      </ActionButtonsContainer>
-                    )}
-                    {!isEditing && (
-                      <ActionButtonsContainer>
-                        {isActionAvailable(habit) ? (
-                          <>
-                            <button
-                              disabled={
-                                habit.score === -5 &&
-                                habit.status === statusLevels[0]
-                              }
-                              className={`action-button ${
-                                habit.score === -5 ? "highlight-red" : ""
-                              }`}
-                              onClick={() => handleScoreChange(habit.id, -1)}
-                            >
-                              <FontAwesomeIcon icon={faTimesCircle} />
-                            </button>
-                            <button
-                              className={`action-button ${
-                                habit.score === 5 ? "highlight-green" : ""
-                              }`}
-                              onClick={() => handleScoreChange(habit.id, 1)}
-                              disabled={
-                                habit.score === 5 &&
-                                habit.status === statusLevels[3]
-                              }
-                            >
+        </TableHeader>
+        <TableWrapper>
+          <Table>
+            <tbody>
+              {user?.habits.map((habit) => (
+                <Tr key={habit.id}>
+                  <Td>
+                    {user.hideSensitive && habit.sensitive
+                      ? "HIDDEN"
+                      : habit.habitName}
+                  </Td>
+                  <Td>{habit.status}</Td>
+                  <Td>
+                    <ScoreBar score={habit.score} />
+                  </Td>
+                  <Td>
+                    <HabitActions>
+                      {isEditing && (
+                        <ActionButtonsContainer>
+                          <DeleteButton
+                            onClick={() => handleDeleteHabit(habit.id)}
+                          >
+                            Delete
+                          </DeleteButton>
+                        </ActionButtonsContainer>
+                      )}
+                      {!isEditing && (
+                        <ActionButtonsContainer>
+                          {isActionAvailable(habit) ? (
+                            <>
+                              <button
+                                disabled={
+                                  habit.score === -5 &&
+                                  habit.status === statusLevels[0]
+                                }
+                                className={`action-button ${
+                                  habit.score === -5 ? "highlight-red" : ""
+                                }`}
+                                onClick={() => handleScoreChange(habit.id, -1)}
+                              >
+                                <FontAwesomeIcon icon={faTimesCircle} />
+                              </button>
+                              <button
+                                className={`action-button ${
+                                  habit.score === 5 ? "highlight-green" : ""
+                                }`}
+                                onClick={() => handleScoreChange(habit.id, 1)}
+                                disabled={
+                                  habit.score === 5 &&
+                                  habit.status === statusLevels[3]
+                                }
+                              >
+                                <FontAwesomeIcon icon={faCheck} />
+                              </button>
+                            </>
+                          ) : (
+                            <CheckMark>
                               <FontAwesomeIcon icon={faCheck} />
-                            </button>
-                          </>
-                        ) : (
-                          <CheckMark>
-                            <FontAwesomeIcon icon={faCheck} />
-                          </CheckMark>
-                        )}
-                      </ActionButtonsContainer>
-                    )}
-                  </HabitActions>
-                </Td>
-              </Tr>
-            ))}
-            {/* </EnableScroll> */}
-          </tbody>
-        </Table>
+                            </CheckMark>
+                          )}
+                        </ActionButtonsContainer>
+                      )}
+                    </HabitActions>
+                  </Td>
+                </Tr>
+              ))}
+            </tbody>
+          </Table>
+        </TableWrapper>
 
         <NewHabitSection>
           <button type="button" onClick={handleAddHabit}>

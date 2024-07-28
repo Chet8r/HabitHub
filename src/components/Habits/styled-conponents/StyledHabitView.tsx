@@ -5,32 +5,233 @@ const buttonStyles = `
   border: none;
   cursor: pointer;
   font-size: 14px;
-  border-radius: 4px;
+  border-radius: 20px;
   font-family: "Roboto", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  margin: 5px;
 `;
 
 // Wrapper section
 export const Wrapper = styled.section`
   width: 100vw;
-  color: #333;
+  min-height: 100vh;
+  background-color: #323232;
   display: flex;
   justify-content: center;
-  align-items: center;
-  /* padding: 10px; */
+  align-items: start;
   font-family: "Roboto", sans-serif;
+  padding: 20px;
+  color: #ffffff;
+
+  @media (max-width: 900px) {
+    padding: 10px;
+  }
 
   @media (max-width: 280px) {
     display: none;
   }
+`;
 
-  @media (max-width: 900px) {
-    /* width: 90%; */
+// Content wrapper
+export const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  padding: 0px 40px 40px 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  background-color: #1e1e1e;
+
+  @media (max-width: 450px) {
+    border-radius: 10px;
+    padding: 10px;
+    width: auto;
+  }
+
+  @media (max-width: 360px) {
+    padding: 10px;
   }
 `;
 
-export const EnableScroll = styled.section`
-  /* max-height: 425px;
-  overflow-y: scroll; */
+// Header section
+export const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    padding-top: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  @media (max-width: 900px) {
+    .title {
+      margin: 5px;
+      padding-top: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #ffffff;
+    }
+  }
+
+  @media (max-width: 450px) {
+    .title {
+      padding-top: 0px;
+    }
+  }
+`;
+
+export const TableWrapper = styled.div`
+  max-height: 55vh;
+  overflow-y: auto;
+  position: relative;
+
+  /* Custom scrollbar styles */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #181818;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 2px solid #000000;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #333;
+  }
+
+  @media (max-height: 600px) {
+    max-height: 40vh;
+  }
+`;
+
+// Table component
+export const Table = styled.table`
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+  margin-bottom: 0px;
+  font-size: 1em;
+  color: #ffffff;
+
+  @media (max-width: 650px) {
+    font-size: 0.9em;
+  }
+`;
+
+export const TableHeader = styled.table`
+  border-spacing: 0px;
+`;
+
+// Table header cell
+export const Th = styled.th`
+  background-color: #444444;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 16px;
+  text-align: left;
+
+  @media (max-width: 900px) {
+    padding: 12px;
+  }
+`;
+
+// Table data cell
+export const Td = styled.td`
+  padding: 16px;
+  text-align: left;
+  border: none;
+  background-color: #2a2a2a;
+  border-radius: 10px;
+  color: #ffffff;
+
+  @media (max-width: 900px) {
+    padding: 10px 12px 10px 12px;
+    border-radius: 0px;
+  }
+
+  @media (max-width: 360px) {
+    padding: 8px;
+    border-radius: 0px;
+  }
+`;
+
+// Table row
+export const Tr = styled.tr`
+  &:hover ${Td} {
+    background-color: #333333;
+  }
+
+  @media (max-width: 900px) {
+    font-size: 10px;
+  }
+`;
+
+// Habit actions cell
+export const HabitActions = styled.td`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  .action-button {
+    ${buttonStyles}
+    background-color: #444;
+    color: #fff;
+    &:hover {
+      background-color: #555;
+    }
+
+    &.highlight-red {
+      background-color: darkred;
+      color: white;
+
+      &:hover {
+        background-color: red;
+      }
+    }
+
+    &.highlight-green {
+      background-color: darkgreen;
+      color: white;
+
+      &:hover {
+        background-color: green;
+      }
+    }
+  }
+
+  @media (max-width: 900px) {
+    gap: 0px;
+    .action-button {
+      width: 30px;
+      height: 30px;
+    }
+  }
+`;
+
+// Action buttons container
+export const ActionButtonsContainer = styled.div`
+  display: flex;
+  /* margin: 0px;
+  padding: 0px; */
+  height: 40px;
+  @media (max-width: 900px) {
+    /* height: 35px; */
+  }
 `;
 
 // Checkmark component
@@ -47,215 +248,76 @@ export const CheckMark = styled.div`
   margin: 4px;
 `;
 
-// Action buttons container
-export const ActionButtonsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100px;
-
-  .action-button.highlight-red {
-    background-color: darkred;
-    color: white;
-    &:hover {
-      background-color: red !important;
-    }
-  }
-
-  .action-button.highlight-green {
-    background-color: darkgreen;
-    color: white;
-    &:hover {
-      background-color: green !important;
-    }
-  }
-`;
-
-// Content wrapper
-
-export const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 60vw;
-  max-width: 800px;
-
-  background-color: #fff;
-  padding: 15px 30px 30px 30px;
-
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin: px auto;
-
-  @media (max-width: 900px) {
-    padding: 5% 5% 5% 5%;
-    padding: auto;
-    width: 100%;
-  }
-
-  @media (max-width: 360px) {
-    padding: 0%;
-  }
-`;
-
-// Header section
-export const Header = styled.header`
-  .title {
-    font-size: medium;
-  }
-
-  h2 {
-    margin-bottom: 10px;
-    padding: 0px;
-  }
-`;
-
-// Table component
-export const Table = styled.table`
-  /* margin-right: 20px; */
-  width: auto;
-  border-collapse: collapse;
-
-  @media (max-width: 650px) {
-    font-size: 10px;
-  }
-`;
-
-// Table header cell
-export const Th = styled.th`
-  background-color: #163020;
-  color: #fff;
-  font-weight: 600;
-  padding: 12px;
-  text-align: left;
-
-  @media (max-width: 900px) {
-    padding: 10px;
-  }
-`;
-
-// Table data cell
-export const Td = styled.td`
-  width: 8vw;
-  padding: 12px; //Table sizing
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-
-  @media (max-width: 900px) {
-    padding: 8px;
-    min-width: 0px !important;
-  }
-
-  @media (max-width: 360px) {
-    width: 8vw;
-    padding: 8px 0px 8px 0px; //Table sizing
-  }
-`;
-
-// Table row
-export const Tr = styled.tr`
-  &:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-`;
-
-// Habit actions cell
-export const HabitActions = styled.td`
-  .action-button {
-    width: 40px;
-    background-color: #d8d8d8;
-    color: #3c4043;
-    ${buttonStyles}
-    padding: 8px 12px;
-    @media (max-width: 300px) {
-      width: auto;
-      padding: 6px 10px;
-    }
-
-    &:first-child {
-      margin-right: 4px;
-    }
-
-    &:hover {
-      background-color: #e7e7e7;
-    }
-  }
-`;
-
 // New habit section
 export const NewHabitSection = styled.section`
-  padding: 10px;
   display: flex;
-  align-items: center;
-
   justify-content: space-between;
-  background-color: #ffffff;
+  align-items: center;
+  margin-top: 30px;
 
   button {
-    /* margin-left: 10px; */
-    background-color: green;
-    color: #ffffff;
     ${buttonStyles}
-    padding: 10px 16px;
+    background-color: #1db954;
+    color: white;
 
     &:hover {
-      background-color: #01a501;
+      background-color: #1ed760;
     }
   }
 
   .RestBtn {
-    background-color: darkred;
+    background-color: #f44336;
+
     &:hover {
-      background-color: red !important;
+      background-color: #e53935;
     }
   }
 
   .editBtn {
-    background-color: orange;
+    background-color: #ff9800;
 
     &:hover {
-      background-color: #ffb803 !important;
+      background-color: #fb8c00;
     }
   }
 
   @media (max-width: 900px) {
-    justify-content: space-evenly;
-
-    button {
-      margin-left: 0;
-      margin-top: auto;
-    }
+    flex-direction: row;
+    margin-top: 5px;
   }
 `;
 
 // Delete button
 export const DeleteButton = styled.button`
-  background-color: darkred;
-  color: white;
   ${buttonStyles}
-  padding: 8px 24px;
+  width: 116.5px; //remove if any issue
+  background-color: #f44336;
+  color: white;
 
   &:hover {
-    background-color: red;
+    background-color: #e53935;
+  }
+
+  @media (max-width: 900px) {
+    width: 90px; //remove if any issue
   }
 `;
 
 // Toggle button
 export const ToggleButton = styled.button`
-  background-color: #007bff;
-  color: white;
   ${buttonStyles}
-  padding: 8px 12px;
+  background-color: #000000;
+  color: white;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #1ed760;
   }
 `;
 
 export const FriendButton = styled.button`
+  ${buttonStyles}
   background-color: #007bff;
   color: white;
-  ${buttonStyles}
-  padding: 8px 12px;
 
   &:hover {
     background-color: #0056b3;
@@ -268,8 +330,10 @@ export const FriendButton = styled.button`
 
 export const HabitRouteWrapper = styled.section`
   display: flex;
-  gap: 6px;
-  justify-content: end;
+  flex-direction: column;
+  align-items: end;
+  gap: 10px;
+  justify-content: center;
   background-color: #1f3227;
   margin: 0;
   padding-top: 10px;
@@ -290,6 +354,6 @@ export const HabitFriendWrapper = styled.section`
   height: 100vh;
   position: absolute;
   display: flex;
-  justify-content: start;
+  justify-content: end;
   flex: 3;
 `;

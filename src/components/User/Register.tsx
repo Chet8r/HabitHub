@@ -130,9 +130,9 @@ const Register: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (
       !formData.firstname ||
+      !formData.email ||
       !formData.password ||
       !formData.confirmPassword
     ) {
@@ -146,12 +146,18 @@ const Register: React.FC = () => {
     }
 
     try {
-      const data = await registerUser(formData);
-      console.log("Registration successful", data);
-      // Handle successful registration (e.g., redirect to login)
-      navigate("/login");
-    } catch (err: any) {
-      setError(err.message);
+      const response: any = await registerUser({
+        firstname: formData.firstname,
+        email: formData.email,
+        password: formData.password,
+      });
+      if (response && response.token) {
+        navigate("/login");
+      } else {
+        setError("Registration failed");
+      }
+    } catch (error) {
+      setError("Registration failed");
     }
   };
 

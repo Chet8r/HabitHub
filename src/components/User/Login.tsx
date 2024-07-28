@@ -215,6 +215,11 @@ interface FormData {
   password: string;
 }
 
+interface FormData {
+  email: string;
+  password: string;
+}
+
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
@@ -229,19 +234,21 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!formData.email || !formData.password) {
       setError("All fields are required");
       return;
     }
 
     try {
-      const data = await loginUser(formData);
-      console.log("Login successful", data);
-      // Handle successful login (e.g., save token, redirect, etc.)
-      navigate("/");
-    } catch (err: any) {
-      setError(err.message);
+      const response: any = await loginUser(formData);
+      if (response && response.token) {
+        localStorage.setItem("token", response.token);
+        navigate("/");
+      } else {
+        setError("Invalid response from server");
+      }
+    } catch (error) {
+      setError("Invalid credentials");
     }
   };
 

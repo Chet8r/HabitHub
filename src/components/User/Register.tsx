@@ -3,6 +3,8 @@ import styled from "styled-components";
 import backgroundImage from "../../../public/bg.jpeg"; // Ensure to provide the correct path
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "./account";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons/faCircleCheck";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -93,7 +95,7 @@ const Text = styled.p`
   padding: 0px 0px 10px 0px;
   color: white;
 
-  text {
+  span {
     color: orange;
     cursor: pointer;
   }
@@ -105,6 +107,50 @@ const Text = styled.p`
 const ErrorMessage = styled.div`
   color: red;
   margin: 10px 0;
+`;
+
+const SuccessWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #0000006f;
+  padding: 20px;
+  border-radius: 10px;
+`;
+
+const SuccessIcon = styled.div`
+  font-size: 28px;
+  color: white;
+`;
+
+const SuccessTitle = styled.h2`
+  color: #4caf50;
+  font-size: medium;
+  font-family: "Roboto", sans-serif;
+`;
+
+const SuccessText = styled.p`
+  color: #f7f7f7;
+  font-family: "Roboto", sans-serif;
+  font-size: small;
+  margin: 10px 0;
+`;
+
+const ContinueButton = styled.button`
+  background-color: #e0e0e0;
+  color: black;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 4px;
+  padding: 12px 24px;
+  margin-top: 20px;
+  font-family: "Roboto", sans-serif;
+
+  &:hover {
+    background-color: white;
+  }
 `;
 
 interface FormData {
@@ -123,6 +169,7 @@ const Register: React.FC = () => {
     confirmPassword: "",
   });
   const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -151,13 +198,16 @@ const Register: React.FC = () => {
         email: formData.email,
         password: formData.password,
       });
-      if (response && response.token) {
-        navigate("/login");
+      if (response && response.message) {
+        setSuccess(true);
+        setError("");
       } else {
         setError("Registration failed");
+        setSuccess(false);
       }
     } catch (error) {
       setError("Registration failed");
+      setSuccess(false);
     }
   };
 
@@ -171,43 +221,58 @@ const Register: React.FC = () => {
         <Logo>HabitHub</Logo>
       </LogoWrapper>
       <FormWrapper>
-        <Title>Register</Title>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-        <form onSubmit={handleSubmit}>
-          <Input
-            type="name"
-            name="firstname"
-            placeholder="First Name"
-            value={formData.firstname}
-            onChange={handleChange}
-          />
-          <Input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          <Input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <Input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-          <Button type="submit">Register</Button>
-          <Text>
-            Already have an account?{" "}
-            <text onClick={navigateToLogin}>Login here.</text>
-          </Text>
-        </form>
+        {success ? (
+          <SuccessWrapper>
+            <SuccessIcon>
+              <FontAwesomeIcon icon={faCircleCheck} />
+            </SuccessIcon>
+            <SuccessTitle>SUCCESS</SuccessTitle>
+            <SuccessText>
+              Your account has been successfully created.
+            </SuccessText>
+            <ContinueButton onClick={navigateToLogin}>Login</ContinueButton>
+          </SuccessWrapper>
+        ) : (
+          <>
+            <Title>Register</Title>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+            <form onSubmit={handleSubmit}>
+              <Input
+                type="name"
+                name="firstname"
+                placeholder="First Name"
+                value={formData.firstname}
+                onChange={handleChange}
+              />
+              <Input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+              <Input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+              <Input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+              />
+              <Button type="submit">Register</Button>
+              <Text>
+                Already have an account?{" "}
+                <span onClick={navigateToLogin}>Login here.</span>
+              </Text>
+            </form>
+          </>
+        )}
       </FormWrapper>
     </PageWrapper>
   );

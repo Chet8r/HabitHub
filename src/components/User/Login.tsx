@@ -1,8 +1,9 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import styled from "styled-components";
 import backgroundImage from "../../../public/bg.jpeg"; // Ensure to provide the correct path
-import { useNavigate } from "react-router-dom";
 import { loginUser } from "./account";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -110,7 +111,7 @@ const Text = styled.p`
   padding: 0px 0px 10px 0px;
   color: white;
 
-  text {
+  span {
     color: orange;
     cursor: pointer;
   }
@@ -222,6 +223,7 @@ interface FormData {
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -243,6 +245,7 @@ const Login: React.FC = () => {
       const response: any = await loginUser(formData);
       if (response && response.token) {
         localStorage.setItem("token", response.token);
+        authLogin(response.token);
         navigate("/");
       } else {
         setError("Invalid response from server");
@@ -297,7 +300,7 @@ const Login: React.FC = () => {
             Register
           </Button>
           <Text>
-            Forgotten your password? <text>Reset it here.</text>
+            Forgotten your password? <span>Reset it here.</span>
           </Text>
         </Form>
       </RightSection>

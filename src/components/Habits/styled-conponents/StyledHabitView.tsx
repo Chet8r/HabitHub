@@ -11,13 +11,21 @@ const buttonStyles = `
 
 // Wrapper section
 export const Wrapper = styled.section`
-  /* width: 100%; */
+  width: 100vw;
   color: #333;
   display: flex;
   justify-content: center;
   align-items: center;
   /* padding: 10px; */
   font-family: "Roboto", sans-serif;
+
+  @media (max-width: 280px) {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    /* width: 90%; */
+  }
 `;
 
 export const EnableScroll = styled.section`
@@ -73,13 +81,19 @@ export const ContentWrapper = styled.div`
 
   background-color: #fff;
   padding: 15px 30px 30px 30px;
+
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: px auto;
 
   @media (max-width: 900px) {
+    padding: 5% 5% 5% 5%;
     padding: auto;
     width: 100%;
+  }
+
+  @media (max-width: 360px) {
+    padding: 0%;
   }
 `;
 
@@ -101,7 +115,7 @@ export const Table = styled.table`
   width: auto;
   border-collapse: collapse;
 
-  @media (max-width: 900px) {
+  @media (max-width: 650px) {
     font-size: 10px;
   }
 `;
@@ -130,6 +144,11 @@ export const Td = styled.td`
     padding: 8px;
     min-width: 0px !important;
   }
+
+  @media (max-width: 360px) {
+    width: 8vw;
+    padding: 8px 0px 8px 0px; //Table sizing
+  }
 `;
 
 // Table row
@@ -147,6 +166,10 @@ export const HabitActions = styled.td`
     color: #3c4043;
     ${buttonStyles}
     padding: 8px 12px;
+    @media (max-width: 300px) {
+      width: auto;
+      padding: 6px 10px;
+    }
 
     &:first-child {
       margin-right: 4px;
@@ -246,23 +269,27 @@ export const FriendButton = styled.button`
 export const HabitRouteWrapper = styled.section`
   display: flex;
   gap: 6px;
-  justify-content: center;
+  justify-content: end;
   background-color: #1f3227;
   margin: 0;
-  padding: 10px;
-  height: 95vh;
+  padding-top: 10px;
+  min-height: 100vh;
+  height: 100%;
 `;
 
 export const HabitContentWrapper = styled.section`
   width: 100%;
   @media (max-width: 900px) {
+    width: 100%;
     height: 90%;
-    padding: 0px 20px 0px 20px;
+    padding: 0px;
   }
 `;
 
 export const HabitFriendWrapper = styled.section`
+  height: 100vh;
+  position: absolute;
   display: flex;
-  justify-content: end;
+  justify-content: start;
   flex: 3;
 `;

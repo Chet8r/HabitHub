@@ -165,12 +165,11 @@ export const Td = styled.td`
     &:nth-child(2) {
       min-width: 80px;
     }
+  }
 
-    /* &:first-child {
-      max-width: 120px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    } */
+  @media (max-width: 400px) {
+    padding: 8px 8px 8px 8px;
+    border-radius: 0px;
   }
 
   @media (max-width: 375px) {
@@ -184,10 +183,6 @@ export const Td = styled.td`
   @media (max-width: 360px) {
     padding: 8px;
     border-radius: 0px;
-
-    /* &:nth-child(2) {
-      min-width: 70px;
-    } */
   }
 `;
 
@@ -364,9 +359,8 @@ export const HabitRouteWrapper = styled.section`
   align-items: end;
   gap: 10px;
   justify-content: center;
-  background-color: #1f3227;
+  background-color: #1c1c1c;
   margin: 0;
-  padding-top: 10px;
   min-height: 100vh;
   height: 100%;
 `;

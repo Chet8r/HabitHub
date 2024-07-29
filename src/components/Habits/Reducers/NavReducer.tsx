@@ -18,7 +18,7 @@ interface Action {
   payload?: any;
 }
 
-const rootReducer = (state = initialState, action: Action): AppState => {
+const NavReducer = (state = initialState, action: Action): AppState => {
   switch (action.type) {
     case TOGGLE_SENSITIVE_DATA:
       return {
@@ -35,4 +35,4 @@ const rootReducer = (state = initialState, action: Action): AppState => {
   }
 };
 
-export default rootReducer;
+export default NavReducer;

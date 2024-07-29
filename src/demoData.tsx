@@ -1,6 +1,5 @@
 // demoData.ts
 
-import { User } from "./components/Shared/types";
 import { habitHubConstants, StatusLevel } from "./components/Habits/Constants";
 
 export const getDateDaysAgo = (days: number): string => {
@@ -9,7 +8,7 @@ export const getDateDaysAgo = (days: number): string => {
   return date.toISOString();
 };
 
-export const userData: User = {
+export const userData: any = {
   userId: 123,
   firstname: "John",
   hideSensitive: false,

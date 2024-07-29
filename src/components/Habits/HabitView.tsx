@@ -27,6 +27,8 @@ import { habitHubConstants } from "./Constants";
 import ScoreBar from "./Shared/ScoreBar";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSensitiveData } from "./Actions/actions";
+import { fetchUserData } from "./Actions/userActions";
+import { RootState } from "../Habits/Reducers/index";
 
 const statusLevels = ["Failing", "Progress", "Consistency", "Habit"];
 const EntryDuration: DurationType[] = [
@@ -44,8 +46,14 @@ const HabitsTable: React.FC = () => {
   const dispatch = useDispatch();
 
   const sensitiveDataHidden = useSelector(
-    (state: any) => state.sensitiveDataHidden
+    (state: any) => state.nav.sensitiveDataHidden
   );
+
+  const data = useSelector((state: RootState) => state.user.data);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -68,7 +76,7 @@ const HabitsTable: React.FC = () => {
   const handleScoreChange = (id: number, change: number) => {
     if (!user) return;
 
-    const updatedHabits = user.habits.map((habit) => {
+    const updatedHabits = user.habits.map((habit: any) => {
       if (habit.id === id) {
         let newScore = habit.score + change;
         let newStatus = habit.status;
@@ -172,6 +180,10 @@ const HabitsTable: React.FC = () => {
     setEditing(!isEditing);
   };
 
+  const getData = () => {
+    dispatch(fetchUserData(135));
+  };
+
   return (
     <Wrapper>
       <ContentWrapper>
@@ -271,11 +283,7 @@ const HabitsTable: React.FC = () => {
               <FontAwesomeIcon icon={faEdit} />
             )}
           </button>
-          <button
-            className="RestBtn"
-            type="button"
-            onClick={handleDeleteAccount}
-          >
+          <button className="RestBtn" type="button" onClick={getData}>
             Reset
           </button>
         </NewHabitSection>

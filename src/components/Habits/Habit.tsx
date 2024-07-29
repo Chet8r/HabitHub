@@ -9,7 +9,7 @@ import {
 
 function Habit() {
   const friendActivityVisible = useSelector(
-    (state: any) => state.friendActivityVisible
+    (state: any) => state.nav.friendActivityVisible
   );
   return (
     <HabitRouteWrapper>

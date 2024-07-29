@@ -47,7 +47,7 @@ const NavItem = styled.li`
 function Nav() {
   const dispatch = useDispatch();
   const sensitiveDataHidden = useSelector(
-    (state: any) => state.sensitiveDataHidden
+    (state: any) => state.nav.sensitiveDataHidden
   );
 
   return (

@@ -4,6 +4,7 @@ import backgroundImage from "../../../public/bg.jpeg"; // Ensure to provide the 
 import { loginUser } from "./account";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
+import { fetchUserData } from "../Habits/Actions/userActions";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -243,9 +244,10 @@ const Login: React.FC = () => {
 
     try {
       const response: any = await loginUser(formData);
-      if (response && response.token) {
+      if (response && response.token && response.userid) {
         localStorage.setItem("token", response.token);
         authLogin(response.token);
+        fetchUserData(response.userid);
         navigate("/");
       } else {
         setError("Invalid response from server");

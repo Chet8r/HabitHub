@@ -30,10 +30,6 @@ export const Wrapper = styled.section`
   @media (max-width: 900px) {
     padding: 10px;
   }
-
-  @media (max-width: 280px) {
-    display: none;
-  }
 `;
 
 // Content wrapper
@@ -51,7 +47,7 @@ export const ContentWrapper = styled.div`
   @media (max-width: 450px) {
     border-radius: 10px;
     padding: 10px;
-    width: auto;
+    /* width: auto; */
   }
 
   @media (max-width: 360px) {
@@ -158,14 +154,40 @@ export const Td = styled.td`
   border-radius: 10px;
   color: #ffffff;
 
+  &:nth-child(2) {
+    min-width: 120px;
+  }
+
   @media (max-width: 900px) {
     padding: 10px 12px 10px 12px;
     border-radius: 0px;
+
+    &:nth-child(2) {
+      min-width: 80px;
+    }
+
+    /* &:first-child {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    } */
+  }
+
+  @media (max-width: 375px) {
+    &:first-child {
+      max-width: 60px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   @media (max-width: 360px) {
     padding: 8px;
     border-radius: 0px;
+
+    /* &:nth-child(2) {
+      min-width: 70px;
+    } */
   }
 `;
 
@@ -176,6 +198,14 @@ export const Tr = styled.tr`
   }
 
   @media (max-width: 900px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 750px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 490px) {
     font-size: 10px;
   }
 `;

@@ -20,6 +20,7 @@ const Bar = styled.div`
 
   @media (max-width: 600px) {
     height: 5px;
+    /* width: 30px; */
     /* border-radius: 20px; */
   }
 `;

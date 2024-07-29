@@ -182,18 +182,17 @@ const HabitsTable: React.FC = () => {
           </div>
         </Header>
 
-        <TableHeader>
-          <thead className="thead">
-            <tr className="tHeader">
-              <Th>Name</Th>
-              <Th>Status</Th>
-              <Th>Score</Th>
-              <Th>Actions</Th>
-            </tr>
-          </thead>
-        </TableHeader>
         <TableWrapper>
           <Table>
+            <thead className="thead">
+              <tr className="tHeader">
+                <Th>Name</Th>
+                <Th>Status</Th>
+                <Th>Score</Th>
+                <Th>Actions</Th>
+              </tr>
+            </thead>
+
             <tbody>
               {user?.habits.map((habit) => (
                 <Tr key={habit.id}>

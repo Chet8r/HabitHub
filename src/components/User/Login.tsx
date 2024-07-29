@@ -25,7 +25,7 @@ const PageWrapper = styled.div`
   }
 `;
 
-const LeftSection = styled.div`
+export const LeftSection = styled.div`
   padding: 0px 50px 30px 100px;
   flex: 6;
   display: flex;
@@ -38,7 +38,7 @@ const LeftSection = styled.div`
     align-items: center;
     padding: 0px;
     padding-top: 50px;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0);
     flex: 0;
   }
 `;
@@ -150,7 +150,7 @@ const RightSection = styled.div`
 
   @media (max-width: 768px) {
     padding-top: 20vh;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0);
     align-items: start;
   }
 `;

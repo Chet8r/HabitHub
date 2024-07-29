@@ -72,6 +72,7 @@ const NewHabitModal: React.FC<NewHabitModalProps> = ({
           <PropertyCard>
             <PropertyName>Name:</PropertyName>
             <Input
+              maxLength={16}
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}

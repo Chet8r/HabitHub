@@ -22,7 +22,6 @@ import {
   NewHabitSection,
   DeleteButton,
   TableWrapper,
-  TableHeader,
 } from "./styled-conponents/StyledHabitView";
 import { habitHubConstants } from "./Constants";
 import ScoreBar from "./Shared/ScoreBar";

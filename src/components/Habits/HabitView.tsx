@@ -165,9 +165,9 @@ const HabitsTable: React.FC = () => {
     setModalOpen(true);
   };
 
-  const handleDeleteAccount = () => {
-    localStorage.clear();
-  };
+  // const handleDeleteAccount = () => {
+  //   localStorage.clear();
+  // };
 
   const handleDeleteHabit = (id: number) => {
     if (!user) return;

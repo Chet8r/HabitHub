@@ -1,11 +1,10 @@
-import axios from "axios";
 import { Dispatch } from "redux";
 import {
   FETCH_USER,
   UserActionTypes,
 } from "../../Shared/actionTypes/userActionTypes";
+import { fetchUser } from "./api";
 
-// Define the action creator with async logic
 export const fetchUserData: any = (userId: number) => {
   return async (dispatch: Dispatch<UserActionTypes>) => {
     dispatch({ type: FETCH_USER.START });
@@ -16,15 +15,11 @@ export const fetchUserData: any = (userId: number) => {
         throw new Error("No token found");
       }
 
-      const response = await axios.get(`api/users/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const data = await fetchUser(userId, token);
 
       dispatch({
         type: FETCH_USER.SUCCESS,
-        payload: response.data, // Adjust according to your API response
+        payload: data, // Adjust according to your API response
       });
     } catch (error: any) {
       dispatch({

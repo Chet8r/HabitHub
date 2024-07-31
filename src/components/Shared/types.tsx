@@ -9,8 +9,9 @@ export interface Habit {
   status: string;
   score: number;
   updateDate: string;
-  sensitive: boolean;
-  updateEntryDur: DurationType;
+  IsSensitive: boolean;
+  updateEntryDurName: string;
+  updateEntryDurValue: number;
 }
 
 export interface HabitLog {

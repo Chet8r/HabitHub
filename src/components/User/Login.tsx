@@ -5,6 +5,7 @@ import { loginUser } from "./account";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { fetchUserData } from "../Habits/Actions/userActions";
+import { useDispatch } from "react-redux";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -223,6 +224,7 @@ interface FormData {
 }
 
 const Login: React.FC = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { login: authLogin } = useAuth();
   const [formData, setFormData] = useState<FormData>({
@@ -247,7 +249,7 @@ const Login: React.FC = () => {
       if (response && response.token && response.userid) {
         localStorage.setItem("token", response.token);
         authLogin(response.token);
-        fetchUserData(response.userid);
+        dispatch(fetchUserData(response.userid));
         navigate("/");
       } else {
         setError("Invalid response from server");

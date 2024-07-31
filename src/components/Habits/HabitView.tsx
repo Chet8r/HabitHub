@@ -27,7 +27,6 @@ import { habitHubConstants } from "./Constants";
 import ScoreBar from "./Shared/ScoreBar";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSensitiveData } from "./Actions/actions";
-import { fetchUserData } from "./Actions/userActions";
 import { RootState } from "../Habits/Reducers/index";
 
 const statusLevels = ["Failing", "Progress", "Consistency", "Habit"];
@@ -39,21 +38,23 @@ const EntryDuration: DurationType[] = [
 ];
 
 const HabitsTable: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isEditing, setEditing] = useState(false);
+
+  const [user, setUser] = useState<User | null>(null);
 
   const dispatch = useDispatch();
 
   const sensitiveDataHidden = useSelector(
     (state: any) => state.nav.sensitiveDataHidden
   );
+  const FullUserIData = useSelector((state: RootState) => state.user.data); //cotains everything including the habits
 
-  const data = useSelector((state: RootState) => state.user.data);
+  const habits = useSelector((state: RootState) => state.habit.habits);
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    console.log(FullUserIData?.habits);
+  }, [sensitiveDataHidden]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -109,7 +110,7 @@ const HabitsTable: React.FC = () => {
     const today = new Date();
     const updateDate = new Date(habit.updateDate);
 
-    switch (habit.updateEntryDur.name) {
+    switch (habit.updateEntryDurName) {
       case habitHubConstants.DAILY:
         return today.toDateString() !== updateDate.toDateString();
       case habitHubConstants.WEEKLY:
@@ -124,7 +125,7 @@ const HabitsTable: React.FC = () => {
         );
         return today >= nextMonth;
       case habitHubConstants.CUSTOM:
-        const customDays = habit.updateEntryDur.value;
+        const customDays = habit.updateEntryDurValue;
         const nextCustom = new Date(updateDate);
         nextCustom.setDate(updateDate.getDate() + customDays);
         return today >= nextCustom;
@@ -148,8 +149,9 @@ const HabitsTable: React.FC = () => {
       status,
       score: 0,
       updateDate: getDateDaysAgo(updateDur.value),
-      sensitive: isSensitive,
-      updateEntryDur: updateDur,
+      IsSensitive: isSensitive,
+      updateEntryDurName: "Daily",
+      updateEntryDurValue: 1,
     };
 
     setUser({ ...user, habits: [...user.habits, newHabit] });
@@ -165,9 +167,9 @@ const HabitsTable: React.FC = () => {
     setModalOpen(true);
   };
 
-  // const handleDeleteAccount = () => {
-  //   localStorage.clear();
-  // };
+  const handleDeleteAccount = () => {
+    localStorage.clear();
+  };
 
   const handleDeleteHabit = (id: number) => {
     if (!user) return;
@@ -178,10 +180,6 @@ const HabitsTable: React.FC = () => {
 
   const handleEdit = () => {
     setEditing(!isEditing);
-  };
-
-  const getData = () => {
-    dispatch(fetchUserData(135));
   };
 
   return (
@@ -205,10 +203,10 @@ const HabitsTable: React.FC = () => {
             </thead>
 
             <tbody>
-              {user?.habits.map((habit) => (
+              {FullUserIData?.habits.map((habit) => (
                 <Tr key={habit.id}>
                   <Td>
-                    {user.hideSensitive && habit.sensitive
+                    {FullUserIData.user.hideSensitive && habit.IsSensitive
                       ? "HIDDEN"
                       : habit.habitName}
                   </Td>
@@ -283,7 +281,11 @@ const HabitsTable: React.FC = () => {
               <FontAwesomeIcon icon={faEdit} />
             )}
           </button>
-          <button className="RestBtn" type="button" onClick={getData}>
+          <button
+            className="RestBtn"
+            type="button"
+            onClick={handleDeleteAccount}
+          >
             Reset
           </button>
         </NewHabitSection>

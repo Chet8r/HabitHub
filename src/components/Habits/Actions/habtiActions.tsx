@@ -57,7 +57,6 @@ export const getHabits: any = (
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        withCredentials: true, // Ensure cookies are sent
       });
       dispatch({ type: GET_HABITS, payload: response.data });
     } catch (error) {
@@ -80,7 +79,6 @@ export const updateHabit: any = (
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          withCredentials: true, // Ensure cookies are sent
         }
       );
       dispatch({ type: UPDATE_HABIT, payload: response.data });
@@ -103,7 +101,6 @@ export const createHabit: any = (
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          withCredentials: true, // Ensure cookies are sent
         }
       );
       dispatch({ type: CREATE_HABIT, payload: response.data });
@@ -123,7 +120,6 @@ export const deleteHabit: any = (
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        withCredentials: true, // Ensure cookies are sent
       });
       dispatch({ type: DELETE_HABIT, payload: habitId });
     } catch (error) {

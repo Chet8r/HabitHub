@@ -77,12 +77,14 @@ const HabitsTable: React.FC = () => {
   const handleSaveHabit = (
     name: string,
     isSensitive: boolean,
+    status: string,
     updateEntryDurName: string,
     updateEntryDurValue: number
   ) => {
     const newHabit: any = {
       habitName: name,
       isSensitive: isSensitive,
+      status: status,
       updateEntryDurName: updateEntryDurName,
       updateEntryDurValue: updateEntryDurValue,
     };

@@ -21,6 +21,7 @@ interface NewHabitModalProps {
   onSave: (
     name: string,
     isSensitive: boolean,
+    status: string,
     updateEntryDurName: string,
     updateEntryDurValue: number
   ) => void;
@@ -47,6 +48,7 @@ const NewHabitModal: React.FC<NewHabitModalProps> = ({
     onSave(
       name,
       isSensitive,
+      status,
       updateDuration.updateEntryDurName,
       updateDuration.updateEntryDurValue
     );

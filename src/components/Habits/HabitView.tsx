@@ -5,8 +5,7 @@ import {
   faTimesCircle,
   faEdit,
 } from "@fortawesome/free-solid-svg-icons";
-import { getDateDaysAgo, userData } from "../../demoData";
-import { User, Habit, DurationType } from "../Shared/types";
+import { Habit, DurationType, UserData } from "../Shared/types";
 import NewHabitModal from "./NewHabitModal";
 import {
   Wrapper,
@@ -26,8 +25,13 @@ import {
 import { habitHubConstants } from "./Constants";
 import ScoreBar from "./Shared/ScoreBar";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSensitiveData } from "./Actions/actions";
-import { RootState } from "../Habits/Reducers/index";
+import {
+  getHabits,
+  updateHabit,
+  createHabit,
+  deleteHabit,
+} from "../Habits/Actions/habtiActions";
+import { RootState } from "../Habits/Reducers";
 
 const statusLevels = ["Failing", "Progress", "Consistency", "Habit"];
 const EntryDuration: DurationType[] = [
@@ -38,72 +42,51 @@ const EntryDuration: DurationType[] = [
 ];
 
 const HabitsTable: React.FC = () => {
+  const dispatch = useDispatch();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isEditing, setEditing] = useState(false);
 
-  const [user, setUser] = useState<User | null>(null);
-
-  const dispatch = useDispatch();
+  const [user, setUser] = useState<UserData>();
 
   const sensitiveDataHidden = useSelector(
-    (state: any) => state.nav.sensitiveDataHidden
+    (state: RootState) => state.nav.sensitiveDataHidden
   );
-  const FullUserIData = useSelector((state: RootState) => state.user.data); //cotains everything including the habits
-
+  const FullUserIData = useSelector((state: RootState) => state.user.data);
   const habits = useSelector((state: RootState) => state.habit.habits);
 
-  useEffect(() => {
-    console.log(FullUserIData?.habits);
-  }, [sensitiveDataHidden]);
+  const userId = user?.user.userId;
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    } else {
-      setUser(userData);
-    }
-  }, []);
+    FullUserIData && FullUserIData.user && setUser(FullUserIData);
+  }, [FullUserIData]);
 
   useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    }
+    if (userId) dispatch(getHabits(userId));
+  }, [dispatch, userId]);
 
-    if (user && user.hideSensitive !== sensitiveDataHidden)
-      dispatch(toggleSensitiveData());
-  }, [user]);
+  const handleScoreChange = (habitId: number, change: number) => {
+    dispatch(updateHabit(userId, habitId, change));
+  };
 
-  const handleScoreChange = (id: number, change: number) => {
-    if (!user) return;
+  const handleSaveHabit = (
+    name: string,
+    isSensitive: boolean,
+    updateEntryDurName: string,
+    updateEntryDurValue: number
+  ) => {
+    const newHabit: any = {
+      habitName: name,
+      isSensitive: isSensitive,
+      updateEntryDurName: updateEntryDurName,
+      updateEntryDurValue: updateEntryDurValue,
+    };
 
-    const updatedHabits = user.habits.map((habit: any) => {
-      if (habit.id === id) {
-        let newScore = habit.score + change;
-        let newStatus = habit.status;
+    dispatch(createHabit(userId, newHabit));
+    setModalOpen(false);
+  };
 
-        if (newScore >= 6) {
-          newScore = 0;
-          const currentIndex = statusLevels.indexOf(habit.status);
-          newStatus =
-            statusLevels[Math.min(currentIndex + 1, statusLevels.length - 1)];
-        } else if (newScore <= -6) {
-          newScore = 0;
-          const currentIndex = statusLevels.indexOf(habit.status);
-          newStatus = statusLevels[Math.max(currentIndex - 1, 0)];
-        }
-
-        return {
-          ...habit,
-          score: newScore,
-          status: newStatus,
-          updateDate: new Date().toISOString(),
-        };
-      }
-      return habit;
-    });
-
-    setUser({ ...user, habits: updatedHabits });
+  const handleDeleteHabit = (habitId: number) => {
+    dispatch(deleteHabit(userId, habitId));
   };
 
   const isActionAvailable = (habit: Habit) => {
@@ -129,39 +112,10 @@ const HabitsTable: React.FC = () => {
         const nextCustom = new Date(updateDate);
         nextCustom.setDate(updateDate.getDate() + customDays);
         return today >= nextCustom;
-
       default:
         return false;
     }
   };
-
-  const handleSaveHabit = (
-    name: string,
-    status: string,
-    isSensitive: boolean,
-    updateDur: DurationType
-  ) => {
-    if (!user) return;
-
-    const newHabit: Habit = {
-      id: user.habits.length ? user.habits[user.habits.length - 1].id + 1 : 1,
-      habitName: name,
-      status,
-      score: 0,
-      updateDate: getDateDaysAgo(updateDur.value),
-      IsSensitive: isSensitive,
-      updateEntryDurName: "Daily",
-      updateEntryDurValue: 1,
-    };
-
-    setUser({ ...user, habits: [...user.habits, newHabit] });
-    setModalOpen(false);
-  };
-
-  useEffect(() => {
-    if (!user) return;
-    setUser({ ...user, hideSensitive: sensitiveDataHidden });
-  }, [sensitiveDataHidden]);
 
   const handleAddHabit = () => {
     setModalOpen(true);
@@ -169,13 +123,6 @@ const HabitsTable: React.FC = () => {
 
   const handleDeleteAccount = () => {
     localStorage.clear();
-  };
-
-  const handleDeleteHabit = (id: number) => {
-    if (!user) return;
-
-    const updatedHabits = user.habits.filter((habit) => habit.id !== id);
-    setUser({ ...user, habits: updatedHabits });
   };
 
   const handleEdit = () => {
@@ -201,12 +148,12 @@ const HabitsTable: React.FC = () => {
                 <Th>Actions</Th>
               </tr>
             </thead>
-
             <tbody>
-              {FullUserIData?.habits.map((habit) => (
-                <Tr key={habit.id}>
+              {habits.map((habit, index) => (
+                <Tr key={index}>
                   <Td>
-                    {FullUserIData.user.hideSensitive && habit.IsSensitive
+                    {(user && user.user.hideSensitive) ||
+                    (sensitiveDataHidden && habit.IsSensitive)
                       ? "HIDDEN"
                       : habit.habitName}
                   </Td>
@@ -273,7 +220,6 @@ const HabitsTable: React.FC = () => {
           <button type="button" onClick={handleAddHabit}>
             Add Habit
           </button>
-
           <button className="editBtn" type="button" onClick={handleEdit}>
             {isEditing ? (
               <FontAwesomeIcon icon={faCheck} />

@@ -3,6 +3,7 @@ import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { Habit } from "../../Shared/types";
 import { RootState } from "../Reducers";
+import { API_URL } from "./api";
 
 // Action Types
 export const GET_HABITS = "GET_HABITS";
@@ -15,14 +16,24 @@ interface GetHabitsAction {
   payload: Habit[];
 }
 
+interface CreateHabitPayload {
+  message?: string;
+  newHabit: Habit;
+}
+
+interface UpdateHabitPayload {
+  message?: string;
+  updatedHabit: Habit;
+}
+
 interface UpdateHabitAction {
   type: typeof UPDATE_HABIT;
-  payload: Habit;
+  payload: UpdateHabitPayload;
 }
 
 interface CreateHabitAction {
   type: typeof CREATE_HABIT;
-  payload: Habit;
+  payload: CreateHabitPayload;
 }
 
 interface DeleteHabitAction {
@@ -37,12 +48,12 @@ export type HabitActionTypes =
   | DeleteHabitAction;
 
 // Action Creators
-export const getHabits = (
+export const getHabits: any = (
   userId: number
 ): ThunkAction<void, RootState, unknown, HabitActionTypes> => {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get(`/api/users/${userId}/habits`, {
+      const response = await axios.get(`${API_URL}/users/${userId}/habits`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -54,15 +65,15 @@ export const getHabits = (
   };
 };
 
-export const updateHabit = (
+export const updateHabit: any = (
   userId: number,
   habitId: number,
   change: number
 ): ThunkAction<void, RootState, unknown, HabitActionTypes> => {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await axios.patch(
-        `/api/users/${userId}/habits/${habitId}`,
+      const response = await axios.put(
+        `${API_URL}/${userId}/habits/${habitId}`,
         { change },
         {
           headers: {
@@ -77,14 +88,14 @@ export const updateHabit = (
   };
 };
 
-export const createHabit = (
+export const createHabit: any = (
   userId: number,
   habitData: Habit
 ): ThunkAction<void, RootState, unknown, HabitActionTypes> => {
   return async (dispatch: Dispatch) => {
     try {
       const response = await axios.post(
-        `/api/users/${userId}/habits`,
+        `${API_URL}/${userId}/habits`,
         habitData,
         {
           headers: {
@@ -99,13 +110,13 @@ export const createHabit = (
   };
 };
 
-export const deleteHabit = (
+export const deleteHabit: any = (
   userId: number,
   habitId: number
 ): ThunkAction<void, RootState, unknown, HabitActionTypes> => {
   return async (dispatch: Dispatch) => {
     try {
-      await axios.delete(`/api/users/${userId}/habits/${habitId}`, {
+      await axios.delete(`${API_URL}/users/${userId}/habits/${habitId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

@@ -104,10 +104,11 @@ export const Select = styled.select`
 export const PropertyCard = styled.div`
   display: flex;
   align-items: center;
-  padding: 15px;
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+  color: black;
 
   .DurationSelection {
     width: 100%;

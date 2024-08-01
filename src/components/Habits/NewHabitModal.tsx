@@ -20,9 +20,9 @@ interface NewHabitModalProps {
   onClose: () => void;
   onSave: (
     name: string,
-    status: string,
     isSensitive: boolean,
-    updateDur: DurationType
+    updateEntryDurName: string,
+    updateEntryDurValue: number
   ) => void;
   statusLevels: string[];
   EntryDuration: DurationType[];
@@ -38,13 +38,18 @@ const NewHabitModal: React.FC<NewHabitModalProps> = ({
   const [name, setName] = useState("");
   const [status, setStatus] = useState(statusLevels[0]);
   const [isSensitive, setIsSensitive] = useState(false);
-  const [updateDuration, setUpdateDuration] = useState<DurationType>({
-    name: "Daily",
-    value: 1,
+  const [updateDuration, setUpdateDuration] = useState({
+    updateEntryDurName: "Daily",
+    updateEntryDurValue: 1,
   });
 
   const handleSave = () => {
-    onSave(name, status, isSensitive, updateDuration);
+    onSave(
+      name,
+      isSensitive,
+      updateDuration.updateEntryDurName,
+      updateDuration.updateEntryDurValue
+    );
     setName("");
     setStatus(statusLevels[0]);
     setIsSensitive(false);
@@ -60,7 +65,10 @@ const NewHabitModal: React.FC<NewHabitModalProps> = ({
       (duration) => duration.name === selectedName
     );
     if (selectedDuration) {
-      setUpdateDuration({ name: selectedName, value: selectedDuration.value });
+      setUpdateDuration({
+        updateEntryDurName: selectedName,
+        updateEntryDurValue: selectedDuration.value,
+      });
     }
   };
 
@@ -92,7 +100,7 @@ const NewHabitModal: React.FC<NewHabitModalProps> = ({
             <PropertyName>Duration:</PropertyName>
             <div className="DurationSelection">
               <Select
-                value={updateDuration.name}
+                value={updateDuration.updateEntryDurName}
                 onChange={handleDurationChange}
               >
                 {EntryDuration.map((duration) => (
@@ -101,18 +109,19 @@ const NewHabitModal: React.FC<NewHabitModalProps> = ({
                   </option>
                 ))}
               </Select>
-              {updateDuration.name === habitHubConstants.CUSTOM && (
+              {updateDuration.updateEntryDurName ===
+                habitHubConstants.CUSTOM && (
                 <>
                   <Input
                     required
                     className="marginTop"
                     placeholder="Enter the number of days (e.g. 12)"
                     type="text"
-                    value={updateDuration.value}
+                    value={updateDuration.updateEntryDurValue}
                     onChange={(e) =>
                       setUpdateDuration({
                         ...updateDuration,
-                        value: Number(e.target.value),
+                        updateEntryDurValue: Number(e.target.value),
                       })
                     }
                   />

@@ -29,13 +29,15 @@ const habitReducer = (
       return {
         ...state,
         habits: state.habits.map((habit) =>
-          habit.id === action.payload.id ? action.payload : habit
+          habit.id === action.payload.updatedHabit.id
+            ? action.payload.updatedHabit
+            : habit
         ),
       };
     case CREATE_HABIT:
       return {
         ...state,
-        habits: [...state.habits, action.payload],
+        habits: [...state.habits, action.payload.newHabit],
       };
     case DELETE_HABIT:
       return {

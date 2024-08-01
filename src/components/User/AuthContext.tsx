@@ -23,6 +23,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const logout = () => {
     setToken(null);
     localStorage.removeItem("token");
+    document.cookie = "refreshToken=; Max-Age=0; path=/; SameSite=Strict";
   };
 
   return (

@@ -52,7 +52,7 @@ const HabitsTable: React.FC = () => {
   const sensitiveDataHidden = useSelector(
     (state: RootState) => state.nav.sensitiveDataHidden
   );
-  const { data } = useSelector((state: RootState) => state.user);
+  const { data, error } = useSelector((state: RootState) => state.user);
   const habits = useSelector((state: RootState) => state.habit.habits);
 
   const userId = user?.user.userId;
@@ -128,7 +128,7 @@ const HabitsTable: React.FC = () => {
   };
 
   const handleDeleteAccount = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
   };
 
   const handleEdit = () => {

@@ -218,6 +218,11 @@ interface FormData {
   password: string;
 }
 
+interface FormData {
+  email: string;
+  password: string;
+}
+
 const Login: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

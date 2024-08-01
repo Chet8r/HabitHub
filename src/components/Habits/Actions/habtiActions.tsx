@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { Habit } from "../../Shared/types";
 import { RootState } from "../Reducers";
-import { API_URL } from "../Constants";
+import { API_URL } from "./api";
 
 // Action Types
 export const GET_HABITS = "GET_HABITS";
@@ -54,7 +54,9 @@ export const getHabits: any = (
   return async (dispatch: Dispatch) => {
     try {
       const response = await axios.get(`${API_URL}/users/${userId}/habits`, {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       });
       dispatch({ type: GET_HABITS, payload: response.data });
     } catch (error) {
@@ -71,9 +73,13 @@ export const updateHabit: any = (
   return async (dispatch: Dispatch) => {
     try {
       const response = await axios.put(
-        `${API_URL}/users/${userId}/habits/${habitId}`,
+        `${API_URL}/${userId}/habits/${habitId}`,
         { change },
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       dispatch({ type: UPDATE_HABIT, payload: response.data });
     } catch (error) {
@@ -89,9 +95,13 @@ export const createHabit: any = (
   return async (dispatch: Dispatch) => {
     try {
       const response = await axios.post(
-        `${API_URL}/users/${userId}/habits`,
+        `${API_URL}/${userId}/habits`,
         habitData,
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       dispatch({ type: CREATE_HABIT, payload: response.data });
     } catch (error) {
@@ -107,7 +117,9 @@ export const deleteHabit: any = (
   return async (dispatch: Dispatch) => {
     try {
       await axios.delete(`${API_URL}/users/${userId}/habits/${habitId}`, {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       });
       dispatch({ type: DELETE_HABIT, payload: habitId });
     } catch (error) {

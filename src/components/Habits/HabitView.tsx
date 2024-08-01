@@ -52,7 +52,7 @@ const HabitsTable: React.FC = () => {
   const sensitiveDataHidden = useSelector(
     (state: RootState) => state.nav.sensitiveDataHidden
   );
-  const { data, error } = useSelector((state: RootState) => state.user);
+  const { data } = useSelector((state: RootState) => state.user);
   const habits = useSelector((state: RootState) => state.habit.habits);
 
   const userId = user?.user.userId;

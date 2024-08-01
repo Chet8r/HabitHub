@@ -11,3 +11,5 @@ export enum StatusLevel {
   Consistency = "Consistency",
   Habit = "Habit",
 }
+
+export const API_URL = "https://habithub-server-ac53ab369ec1.herokuapp.com/api";

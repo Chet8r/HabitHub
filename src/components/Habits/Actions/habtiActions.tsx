@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { Habit } from "../../Shared/types";
 import { RootState } from "../Reducers";
-import { API_URL } from "./api";
+import { API_URL } from "../Constants";
 
 // Action Types
 export const GET_HABITS = "GET_HABITS";
@@ -54,9 +54,7 @@ export const getHabits: any = (
   return async (dispatch: Dispatch) => {
     try {
       const response = await axios.get(`${API_URL}/users/${userId}/habits`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        withCredentials: true,
       });
       dispatch({ type: GET_HABITS, payload: response.data });
     } catch (error) {
@@ -73,13 +71,9 @@ export const updateHabit: any = (
   return async (dispatch: Dispatch) => {
     try {
       const response = await axios.put(
-        `${API_URL}/${userId}/habits/${habitId}`,
+        `${API_URL}/users/${userId}/habits/${habitId}`,
         { change },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        { withCredentials: true }
       );
       dispatch({ type: UPDATE_HABIT, payload: response.data });
     } catch (error) {
@@ -95,13 +89,9 @@ export const createHabit: any = (
   return async (dispatch: Dispatch) => {
     try {
       const response = await axios.post(
-        `${API_URL}/${userId}/habits`,
+        `${API_URL}/users/${userId}/habits`,
         habitData,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        { withCredentials: true }
       );
       dispatch({ type: CREATE_HABIT, payload: response.data });
     } catch (error) {
@@ -117,9 +107,7 @@ export const deleteHabit: any = (
   return async (dispatch: Dispatch) => {
     try {
       await axios.delete(`${API_URL}/users/${userId}/habits/${habitId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        withCredentials: true,
       });
       dispatch({ type: DELETE_HABIT, payload: habitId });
     } catch (error) {

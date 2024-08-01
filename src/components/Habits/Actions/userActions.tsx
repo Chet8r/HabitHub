@@ -5,17 +5,14 @@ import {
 } from "../../Shared/actionTypes/userActionTypes";
 import { fetchUser } from "./api";
 
-export const fetchUserData: any = (userId: number) => {
+export const fetchUserData: any = (
+  userId: number
+): ((dispatch: Dispatch<UserActionTypes>) => Promise<void>) => {
   return async (dispatch: Dispatch<UserActionTypes>) => {
     dispatch({ type: FETCH_USER.START });
 
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        throw new Error("No token found");
-      }
-
-      const data = await fetchUser(userId, token);
+      const data = await fetchUser(userId);
 
       dispatch({
         type: FETCH_USER.SUCCESS,

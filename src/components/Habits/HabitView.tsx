@@ -107,11 +107,8 @@ const HabitsTable: React.FC = () => {
         nextWeek.setDate(updateDate.getDate() + 7);
         return today >= nextWeek;
       case habitHubConstants.MONTHLY:
-        const nextMonth = new Date(
-          updateDate.getFullYear(),
-          updateDate.getMonth() + 1,
-          updateDate.getDate()
-        );
+        const nextMonth = new Date(updateDate);
+        nextMonth.setDate(updateDate.getDate() + 30);
         return today >= nextMonth;
       case habitHubConstants.CUSTOM:
         const customDays = habit.updateEntryDurValue;

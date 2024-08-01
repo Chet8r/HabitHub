@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
 import { logoutUser } from "./account";
+import { Navigate } from "react-router-dom";
 
 interface AuthContextType {
   token: string | null;
@@ -15,7 +15,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [token, setToken] = useState<string | null>(null); // Avoid using localStorage for tokens
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const location = useLocation();
 
   const login = (token: string) => {
@@ -28,7 +28,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     // Clear cookies if necessary
     // You might need to trigger a logout endpoint to handle cookies on the server-side
     logoutUser().then(() => {
-      navigate("/login", { replace: true });
+      <Navigate to="/login" />;
     });
   };
 

@@ -248,6 +248,7 @@ const Login: React.FC = () => {
       const response: any = await loginUser(formData);
       if (response && response.token && response.userid) {
         localStorage.setItem("token", response.token);
+        localStorage.setItem("userid", response.userid);
         authLogin(response.token);
         dispatch(fetchUserData(response.userid));
         navigate("/");

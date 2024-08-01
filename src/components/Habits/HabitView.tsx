@@ -32,6 +32,7 @@ import {
   deleteHabit,
 } from "../Habits/Actions/habtiActions";
 import { RootState } from "../Habits/Reducers";
+import { fetchUserData } from "./Actions/userActions";
 
 const statusLevels = ["Failing", "Progress", "Consistency", "Habit"];
 const EntryDuration: DurationType[] = [
@@ -51,14 +52,19 @@ const HabitsTable: React.FC = () => {
   const sensitiveDataHidden = useSelector(
     (state: RootState) => state.nav.sensitiveDataHidden
   );
-  const FullUserIData = useSelector((state: RootState) => state.user.data);
+  const { data, error } = useSelector((state: RootState) => state.user);
   const habits = useSelector((state: RootState) => state.habit.habits);
 
   const userId = user?.user.userId;
 
   useEffect(() => {
-    FullUserIData && FullUserIData.user && setUser(FullUserIData);
-  }, [FullUserIData]);
+    const userid = localStorage.getItem("userid");
+    if (userid) dispatch(fetchUserData(userid));
+  }, []);
+
+  useEffect(() => {
+    data && data.user && setUser(data);
+  }, [data]);
 
   useEffect(() => {
     if (userId) dispatch(getHabits(userId));

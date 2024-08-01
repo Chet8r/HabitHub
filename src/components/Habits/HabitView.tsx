@@ -128,7 +128,7 @@ const HabitsTable: React.FC = () => {
   };
 
   const handleDeleteAccount = () => {
-    localStorage.clear();
+    localStorage.removeItem("token");
   };
 
   const handleEdit = () => {

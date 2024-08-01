@@ -50,16 +50,10 @@ export const loginUser = async (userData: UserData): Promise<ApiResponse> => {
 
 export const refreshToken = async (): Promise<string | null> => {
   try {
-    const refreshToken = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("refreshToken="))
-      ?.split("=")[1];
-
-    if (!refreshToken) throw new Error("No refresh token found");
-
     const response: AxiosResponse<ApiResponse> = await axios.post(
       `${API_URL}/auth/refresh-token`,
-      { refreshToken }
+      {}, // No need to send the token here as it’s handled server-side
+      { withCredentials: true } // Important to include cookies with requests
     );
 
     const { token } = response.data;

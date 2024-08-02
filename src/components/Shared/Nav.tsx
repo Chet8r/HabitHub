@@ -53,8 +53,9 @@ const DropdownButton = styled(ToggleButton)`
   cursor: pointer;
 `;
 
-const DropdownMenu = styled.div<{ isOpen: boolean }>`
-  display: ${(props) => (props.isOpen ? "block" : "none")};
+const DropdownMenu = styled.div`
+  margin-top: 6px;
+  padding: 2px;
   position: absolute;
   background-color: white;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
@@ -126,10 +127,12 @@ function Nav() {
             <DropdownButton onClick={handleToggleDropdown}>
               Account
             </DropdownButton>
-            <DropdownMenu isOpen={dropdownOpen}>
-              <DropdownItem onClick={handleProfile}>Profile</DropdownItem>
-              <DropdownItem onClick={handleSignOut}>Sign Out</DropdownItem>
-            </DropdownMenu>
+            {dropdownOpen && (
+              <DropdownMenu>
+                <DropdownItem onClick={handleProfile}>Profile</DropdownItem>
+                <DropdownItem onClick={handleSignOut}>Sign Out</DropdownItem>
+              </DropdownMenu>
+            )}
           </DropdownContainer>
         </NavItem>
       </NavLinks>

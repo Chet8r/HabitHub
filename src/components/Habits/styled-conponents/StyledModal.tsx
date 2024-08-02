@@ -7,7 +7,7 @@ export const ModalBackdrop = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7); /* Darker backdrop for dark mode */
   backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
@@ -15,13 +15,13 @@ export const ModalBackdrop = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background: #fff;
+  background: #1e1e1e; /* Dark background for content */
   padding: 20px;
   border-radius: 15px;
   width: 90vw;
   max-width: 500px;
   height: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Darker shadow */
 
   @media (min-width: 768px) {
     padding: 30px;
@@ -40,7 +40,7 @@ export const ModalContent = styled.div`
 
 export const ModalHeader = styled.h2`
   margin-top: 0;
-  color: #163020;
+  color: #e0e0e0; /* Light color for header text */
   font-size: 1.5em;
 
   @media (min-width: 768px) {
@@ -51,7 +51,7 @@ export const ModalHeader = styled.h2`
 export const ModalBody = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
   margin-top: 20px;
 `;
 
@@ -61,9 +61,9 @@ export const ModalActions = styled.div`
   margin-top: 20px;
 
   button {
-    background-color: #163020;
+    background-color: #333; /* Dark button background */
     border: none;
-    color: #fff;
+    color: #e0e0e0; /* Light text color */
     cursor: pointer;
     font-size: 14px;
     padding: 10px 16px;
@@ -72,32 +72,40 @@ export const ModalActions = styled.div`
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: #145319;
+      background-color: green; /* Slightly lighter on hover */
     }
   }
 
   button.cancel {
-    background-color: #b6c4b6;
+    background-color: #555; /* Darker background for cancel button */
 
     &:hover {
-      background-color: #becdbe;
+      background-color: darkred; /* Slightly lighter on hover */
     }
   }
 `;
 
 export const Input = styled.input`
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #444; /* Dark border */
   border-radius: 4px;
   font-size: 14px;
+  background-color: #444; /* Dark background for input */
+  color: #e0e0e0; /* Light text color */
   flex: 1;
+
+  ::placeholder {
+    color: #888; /* Placeholder text color */
+  }
 `;
 
 export const Select = styled.select`
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #444; /* Dark border */
   border-radius: 4px;
   font-size: 14px;
+  background-color: #444; /* Dark background for select */
+  color: #e0e0e0; /* Light text color */
   flex: 1;
 `;
 
@@ -105,10 +113,10 @@ export const PropertyCard = styled.div`
   display: flex;
   align-items: center;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #2e2e2e; /* Dark border */
   border-radius: 8px;
-  background-color: #f9f9f9;
-  color: black;
+  background-color: #2e2e2e; /* Dark background */
+  color: #e0e0e0; /* Light text color */
 
   .DurationSelection {
     width: 100%;
@@ -122,7 +130,7 @@ export const PropertyCard = styled.div`
 `;
 
 export const PropertyName = styled.div`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   width: 100px; /* Adjusted width */
   flex-shrink: 0;
@@ -139,15 +147,15 @@ export const StyledCheckbox = styled.input`
   height: 24px;
   cursor: pointer;
   appearance: none;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: #333; /* Dark checkbox background */
+  border: 1px solid #444; /* Dark border */
   border-radius: 4px;
   display: inline-block;
   position: relative;
 
   &:checked {
-    background-color: orange;
-    border-color: orange;
+    background-color: darkgreen;
+    border-color: darkgreen;
   }
 
   &:checked::after {

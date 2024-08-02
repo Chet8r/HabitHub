@@ -33,6 +33,7 @@ import {
 } from "../Habits/Actions/habtiActions";
 import { RootState } from "../Habits/Reducers";
 import { fetchUserData } from "./Actions/userActions";
+import Loading from "../Shared/Loading";
 
 const statusLevels = ["Failing", "Progress", "Consistency", "Habit"];
 const EntryDuration: DurationType[] = [
@@ -52,7 +53,7 @@ const HabitsTable: React.FC = () => {
   const sensitiveDataHidden = useSelector(
     (state: RootState) => state.nav.sensitiveDataHidden
   );
-  const { data } = useSelector((state: RootState) => state.user);
+  const { data, loading } = useSelector((state: RootState) => state.user);
   const habits = useSelector((state: RootState) => state.habit.habits);
 
   const userId = user?.user.userId;
@@ -126,10 +127,6 @@ const HabitsTable: React.FC = () => {
     setModalOpen(true);
   };
 
-  const handleDeleteAccount = () => {
-    localStorage.clear();
-  };
-
   const handleEdit = () => {
     setEditing(!isEditing);
   };
@@ -143,83 +140,89 @@ const HabitsTable: React.FC = () => {
           </div>
         </Header>
 
-        <TableWrapper>
-          <Table>
-            <thead className="thead">
-              <tr className="tHeader">
-                <Th>Name</Th>
-                <Th>Status</Th>
-                <Th>Score</Th>
-                <Th>Actions</Th>
-              </tr>
-            </thead>
-            <tbody>
-              {habits.map((habit, index) => (
-                <Tr key={index}>
-                  <Td>
-                    {(user && user.user.hideSensitive) ||
-                    (sensitiveDataHidden && habit.IsSensitive)
-                      ? "HIDDEN"
-                      : habit.habitName}
-                  </Td>
-                  <Td>{habit.status}</Td>
-                  <Td>
-                    <ScoreBar score={habit.score} />
-                  </Td>
-                  <Td>
-                    <HabitActions>
-                      {isEditing && (
-                        <ActionButtonsContainer>
-                          <DeleteButton
-                            onClick={() => handleDeleteHabit(habit.id)}
-                          >
-                            Delete
-                          </DeleteButton>
-                        </ActionButtonsContainer>
-                      )}
-                      {!isEditing && (
-                        <ActionButtonsContainer>
-                          {isActionAvailable(habit) ? (
-                            <>
-                              <button
-                                disabled={
-                                  habit.score === -5 &&
-                                  habit.status === statusLevels[0]
-                                }
-                                className={`action-button ${
-                                  habit.score === -5 ? "highlight-red" : ""
-                                }`}
-                                onClick={() => handleScoreChange(habit.id, -1)}
-                              >
-                                <FontAwesomeIcon icon={faTimesCircle} />
-                              </button>
-                              <button
-                                className={`action-button ${
-                                  habit.score === 5 ? "highlight-green" : ""
-                                }`}
-                                onClick={() => handleScoreChange(habit.id, 1)}
-                                disabled={
-                                  habit.score === 5 &&
-                                  habit.status === statusLevels[3]
-                                }
-                              >
+        {loading ? (
+          <Loading></Loading>
+        ) : (
+          <TableWrapper>
+            <Table>
+              <thead className="thead">
+                <tr className="tHeader">
+                  <Th>Name</Th>
+                  <Th>Status</Th>
+                  <Th>Score</Th>
+                  <Th>Actions</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {habits.map((habit, index) => (
+                  <Tr key={index}>
+                    <Td>
+                      {(user && user.user.hideSensitive) ||
+                      (sensitiveDataHidden && habit.IsSensitive)
+                        ? "HIDDEN"
+                        : habit.habitName}
+                    </Td>
+                    <Td>{habit.status}</Td>
+                    <Td>
+                      <ScoreBar score={habit.score} />
+                    </Td>
+                    <Td>
+                      <HabitActions>
+                        {isEditing && (
+                          <ActionButtonsContainer>
+                            <DeleteButton
+                              onClick={() => handleDeleteHabit(habit.id)}
+                            >
+                              Delete
+                            </DeleteButton>
+                          </ActionButtonsContainer>
+                        )}
+                        {!isEditing && (
+                          <ActionButtonsContainer>
+                            {isActionAvailable(habit) ? (
+                              <>
+                                <button
+                                  disabled={
+                                    habit.score === -5 &&
+                                    habit.status === statusLevels[0]
+                                  }
+                                  className={`action-button ${
+                                    habit.score === -5 ? "highlight-red" : ""
+                                  }`}
+                                  onClick={() =>
+                                    handleScoreChange(habit.id, -1)
+                                  }
+                                >
+                                  <FontAwesomeIcon icon={faTimesCircle} />
+                                </button>
+                                <button
+                                  className={`action-button ${
+                                    habit.score === 5 ? "highlight-green" : ""
+                                  }`}
+                                  onClick={() => handleScoreChange(habit.id, 1)}
+                                  disabled={
+                                    habit.score === 5 &&
+                                    habit.status === statusLevels[3]
+                                  }
+                                >
+                                  <FontAwesomeIcon icon={faCheck} />
+                                </button>
+                              </>
+                            ) : (
+                              <CheckMark>
                                 <FontAwesomeIcon icon={faCheck} />
-                              </button>
-                            </>
-                          ) : (
-                            <CheckMark>
-                              <FontAwesomeIcon icon={faCheck} />
-                            </CheckMark>
-                          )}
-                        </ActionButtonsContainer>
-                      )}
-                    </HabitActions>
-                  </Td>
-                </Tr>
-              ))}
-            </tbody>
-          </Table>
-        </TableWrapper>
+                              </CheckMark>
+                            )}
+                          </ActionButtonsContainer>
+                        )}
+                      </HabitActions>
+                    </Td>
+                  </Tr>
+                ))}
+              </tbody>
+            </Table>
+          </TableWrapper>
+        )}
 
         <NewHabitSection>
           <button type="button" onClick={handleAddHabit}>
@@ -231,13 +234,6 @@ const HabitsTable: React.FC = () => {
             ) : (
               <FontAwesomeIcon icon={faEdit} />
             )}
-          </button>
-          <button
-            className="RestBtn"
-            type="button"
-            onClick={handleDeleteAccount}
-          >
-            Reset
           </button>
         </NewHabitSection>
       </ContentWrapper>

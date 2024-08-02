@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
@@ -14,6 +15,8 @@ import {
   toggleSensitiveData,
   toggleFriendActivity,
 } from "../Habits/Actions/actions";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../User/AuthContext"; // Make sure to import the useAuth hook
 
 const Wrapper = styled.nav`
   display: flex;
@@ -44,11 +47,53 @@ const NavItem = styled.li`
   gap: 10px;
 `;
 
+const DropdownContainer = styled.div``;
+
+const DropdownButton = styled(ToggleButton)`
+  cursor: pointer;
+`;
+
+const DropdownMenu = styled.div<{ isOpen: boolean }>`
+  display: ${(props) => (props.isOpen ? "block" : "none")};
+  position: absolute;
+  background-color: white;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 1;
+`;
+
+const DropdownItem = styled.div`
+  padding: 10px 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
+`;
+
 function Nav() {
   const dispatch = useDispatch();
   const sensitiveDataHidden = useSelector(
     (state: any) => state.nav.sensitiveDataHidden
   );
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleToggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const handleProfile = () => {
+    setDropdownOpen(false);
+    navigate("/profile");
+  };
+
+  const handleSignOut = () => {
+    setDropdownOpen(false);
+    logout();
+    navigate("/login");
+  };
 
   return (
     <Wrapper>
@@ -77,7 +122,15 @@ function Nav() {
               <FontAwesomeIcon icon={faUserFriends} />
             </div>
           </FriendButton>
-          <ToggleButton>Account</ToggleButton>
+          <DropdownContainer>
+            <DropdownButton onClick={handleToggleDropdown}>
+              Account
+            </DropdownButton>
+            <DropdownMenu isOpen={dropdownOpen}>
+              <DropdownItem onClick={handleProfile}>Profile</DropdownItem>
+              <DropdownItem onClick={handleSignOut}>Sign Out</DropdownItem>
+            </DropdownMenu>
+          </DropdownContainer>
         </NavItem>
       </NavLinks>
     </Wrapper>

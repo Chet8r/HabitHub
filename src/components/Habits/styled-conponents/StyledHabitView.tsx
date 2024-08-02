@@ -24,7 +24,7 @@ export const Wrapper = styled.section`
   justify-content: center;
   align-items: start;
   font-family: "Roboto", sans-serif;
-  padding: 20px;
+  padding: 10px;
   color: #ffffff;
 
   @media (max-width: 900px) {
@@ -38,7 +38,7 @@ export const ContentWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  max-width: 1000px;
+  max-width: 950px;
   padding: 0px 40px 40px 40px;
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
@@ -63,7 +63,7 @@ export const Header = styled.header`
 
   .title {
     padding-top: 10px;
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: bold;
     color: #ffffff;
   }
@@ -147,7 +147,7 @@ export const Th = styled.th`
 
 // Table data cell
 export const Td = styled.td`
-  padding: 16px;
+  padding: 12px;
   text-align: left;
   border: none;
   background-color: #2a2a2a;
@@ -156,6 +156,11 @@ export const Td = styled.td`
 
   &:nth-child(2) {
     min-width: 120px;
+    width: 190px;
+  }
+
+  &:nth-child(4) {
+    width: 200px;
   }
 
   @media (max-width: 900px) {
@@ -164,6 +169,11 @@ export const Td = styled.td`
 
     &:nth-child(2) {
       min-width: 80px;
+      width: auto;
+    }
+
+    &:nth-child(4) {
+      width: 120px;
     }
   }
 
@@ -211,6 +221,7 @@ export const HabitActions = styled.td`
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  max-width: 90px;
 
   .action-button {
     ${buttonStyles}

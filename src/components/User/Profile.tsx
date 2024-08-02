@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../Habits/Reducers";
-import Loading from "../Shared/Loading";
 
 const ProfileWrapper = styled.div`
   display: flex;
@@ -98,7 +97,7 @@ const Button = styled.button`
 
 const Profile: React.FC = () => {
   const [user, setUser] = useState<any>();
-  const { data, loading } = useSelector((state: RootState) => state.user);
+  const { data } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     data && data.user && setUser(data);

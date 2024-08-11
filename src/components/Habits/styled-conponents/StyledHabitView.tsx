@@ -347,7 +347,7 @@ export const ToggleButton = styled.button`
   color: white;
 
   &:hover {
-    background-color: #1ed760;
+    background-color: darkorange;
   }
 `;
 

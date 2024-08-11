@@ -216,7 +216,7 @@ export const Tr = styled.tr`
 `;
 
 // Habit actions cell
-export const HabitActions = styled.td`
+export const HabitActions = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -277,7 +277,7 @@ export const CheckMark = styled.div`
   justify-content: center;
   width: 24px;
   height: 24px;
-  background-color: green;
+  background-color: hsl(120, 100%, 25.098039215686274%);
   border-radius: 50%;
   color: white;
   font-size: 16px;
@@ -341,6 +341,7 @@ export const DeleteButton = styled.button`
 
 // Toggle button
 export const ToggleButton = styled.button`
+  height: 30px;
   ${buttonStyles}
   background-color: #000000;
   color: white;
@@ -351,6 +352,7 @@ export const ToggleButton = styled.button`
 `;
 
 export const FriendButton = styled.button`
+  height: 30px;
   ${buttonStyles}
   background-color: #007bff;
   color: white;

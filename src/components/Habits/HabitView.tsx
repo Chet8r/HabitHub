@@ -5,7 +5,7 @@ import {
   faTimesCircle,
   faEdit,
 } from "@fortawesome/free-solid-svg-icons";
-import { Habit, DurationType, UserData } from "../Shared/types";
+import { Habit, UserData } from "../Shared/types";
 import NewHabitModal from "./NewHabitModal";
 import {
   Wrapper,
@@ -22,7 +22,7 @@ import {
   DeleteButton,
   TableWrapper,
 } from "./styled-conponents/StyledHabitView";
-import { habitHubConstants } from "./Constants";
+import { EntryDuration, habitHubConstants, statusLevels } from "./Constants";
 import ScoreBar from "./Shared/ScoreBar";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -34,14 +34,6 @@ import {
 import { RootState } from "../Habits/Reducers";
 import { fetchUserData } from "./Actions/userActions";
 import Loading from "../Shared/Loading";
-
-const statusLevels = ["Failing", "Progress", "Consistency", "Habit"];
-const EntryDuration: DurationType[] = [
-  { name: "Daily", value: 1 },
-  { name: "Weekly", value: 7 },
-  { name: "Monthly", value: 30 },
-  { name: "Custom", value: 0 },
-];
 
 const HabitsTable: React.FC = () => {
   const dispatch = useDispatch();
@@ -136,7 +128,7 @@ const HabitsTable: React.FC = () => {
       <ContentWrapper>
         <Header>
           <div className="titleContainer">
-            <h2 className="title">Habits</h2>
+            <h2 className="title">HABIT</h2>
           </div>
         </Header>
 

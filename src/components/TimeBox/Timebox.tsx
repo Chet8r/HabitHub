@@ -99,7 +99,7 @@ const TimeboxDaily: React.FC = () => {
       <Wrapper>
         <ContentWrapper>
           <Header>
-            <h2 className="title">TIMEBOX</h2>
+            <h2 className="title">TIMEBOX V1</h2>
             <ControlSection>
               <label>
                 Start Time:

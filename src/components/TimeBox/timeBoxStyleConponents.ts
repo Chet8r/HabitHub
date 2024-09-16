@@ -374,24 +374,63 @@ export const TimeControlButton = styled.button`
 `;
 
 export const ClearButton = styled.button`
-  background-color: darkred;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 20px;
+  background-color: darkred; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove border */
+  padding: 8px 16px; /* Add padding */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Display inline-block */
+  font-size: 16px; /* Font size */
+  margin: 10px 2px; /* Margin */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
 
   &:hover {
-    background-color: red;
+    background-color: #45a049; /* Darker green on hover */
+  }
+
+  &:disabled {
+    background-color: #c8c8c8; /* Light grey when disabled */
+    cursor: not-allowed;
   }
 
   svg {
-    font-size: 1.2em;
+    margin-right: 8px;
   }
+`;
+
+export const SaveButton = styled.button`
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #45a049;
+  }
+
+  &:disabled {
+    background-color: #c8c8c8;
+    cursor: not-allowed;
+  }
+
+  svg {
+    margin-right: 8px;
+  }
+`;
+
+export const FooterContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;

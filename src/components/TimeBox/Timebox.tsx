@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import {
   ContentWrapper,
@@ -16,10 +16,13 @@ import {
   TimeControlMenu,
   TimeDisplay,
   Overlay,
-  ClearButton, // Import the new styled component
+  ClearButton,
+  SaveButton,
+  FooterContainer,
 } from "./timeBoxStyleConponents";
-import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
+import { FaPlus, FaMinus, FaTrash, FaSave } from "react-icons/fa";
 import useScrollToTopOnBlur from "../hooks/useScrollToTopOnBlur";
+import axios from "axios";
 
 interface Task {
   text: string;
@@ -33,6 +36,7 @@ const TimeboxDaily: React.FC = () => {
   const [hours, setHours] = useState<number>(6);
   const [showTimeControl, setShowTimeControl] = useState<boolean>(false);
   const [theme] = useState(lightTheme);
+  const [isDirty, setIsDirty] = useState<boolean>(false); // Track if there are unsaved changes
 
   useScrollToTopOnBlur();
 
@@ -44,26 +48,32 @@ const TimeboxDaily: React.FC = () => {
     const newTasks = [...tasks];
     newTasks[index] = { ...newTasks[index], text: value };
     setTasks(newTasks);
+    setIsDirty(true);
   };
 
   const handleNotesChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setNotes(event.target.value);
+    setIsDirty(true);
   };
 
   const increaseStartTime = () => {
     setStartTime((prev) => (prev < 23 ? prev + 1 : prev));
+    setIsDirty(true);
   };
 
   const decreaseStartTime = () => {
     setStartTime((prev) => (prev > 0 ? prev - 1 : prev));
+    setIsDirty(true);
   };
 
   const increaseHours = () => {
     setHours((prev) => (prev < 24 ? prev + 1 : prev));
+    setIsDirty(true);
   };
 
   const decreaseHours = () => {
     setHours((prev) => (prev > 1 ? prev - 1 : prev));
+    setIsDirty(true);
   };
 
   const handleTaskCompletionToggle = (index: number) => {
@@ -73,11 +83,13 @@ const TimeboxDaily: React.FC = () => {
       completed: !newTasks[index].completed,
     };
     setTasks(newTasks);
+    setIsDirty(true);
   };
 
   const handleClearAll = () => {
     setTasks([]);
     setNotes("");
+    setIsDirty(true);
   };
 
   const renderTimeSlots = () => {
@@ -109,6 +121,28 @@ const TimeboxDaily: React.FC = () => {
     }
     return timeSlots;
   };
+
+  // const handleSave = async () => {
+  //   try {
+  //     await axios.post(
+  //       `${API_URL}/timebox`,
+  //       {
+  //         notes,
+  //         tasks,
+  //         startTime,
+  //         hours,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //     setIsDirty(false);
+  //   } catch (error) {
+  //     console.error("Error saving timebox:", error);
+  //   }
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -166,9 +200,17 @@ const TimeboxDaily: React.FC = () => {
                   <tbody>{renderTimeSlots()}</tbody>
                 </Table>
               </TableWrapper>
-              <ClearButton onClick={handleClearAll}>
-                <FaTrash /> Clear All
-              </ClearButton>
+              <FooterContainer>
+                <ClearButton onClick={handleClearAll}>
+                  <FaTrash /> Clear All
+                </ClearButton>
+                <SaveButton
+                  onClick={() => console.log("saving")}
+                  disabled={!isDirty}
+                >
+                  Save Changes
+                </SaveButton>
+              </FooterContainer>
             </RightSection>
           </MainContent>
         </ContentWrapper>

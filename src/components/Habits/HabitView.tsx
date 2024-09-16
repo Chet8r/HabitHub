@@ -34,6 +34,7 @@ import {
 import { RootState } from "../Habits/Reducers";
 import { fetchUserData } from "./Actions/userActions";
 import Loading from "../Shared/Loading";
+import useScrollToTopOnBlur from "../hooks/useScrollToTopOnBlur";
 
 const HabitsTable: React.FC = () => {
   const dispatch = useDispatch();
@@ -122,6 +123,8 @@ const HabitsTable: React.FC = () => {
   const handleEdit = () => {
     setEditing(!isEditing);
   };
+
+  useScrollToTopOnBlur();
 
   return (
     <Wrapper>

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { fetchUserData } from "../Habits/Actions/userActions";
 import { useDispatch } from "react-redux";
+import useScrollToTopOnBlur from "../hooks/useScrollToTopOnBlur";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -232,6 +233,8 @@ const Login: React.FC = () => {
     password: "",
   });
   const [error, setError] = useState<string>("");
+
+  useScrollToTopOnBlur();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

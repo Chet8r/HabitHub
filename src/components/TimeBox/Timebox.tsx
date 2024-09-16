@@ -19,6 +19,7 @@ import {
   ClearButton, // Import the new styled component
 } from "./timeBoxStyleConponents";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
+import useScrollToTopOnBlur from "../hooks/useScrollToTopOnBlur";
 
 interface Task {
   text: string;
@@ -33,28 +34,7 @@ const TimeboxDaily: React.FC = () => {
   const [showTimeControl, setShowTimeControl] = useState<boolean>(false);
   const [theme] = useState(lightTheme);
 
-  // Function to scroll to the top of the page
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    // Event listener to scroll to the top when an input field loses focus
-    const handleBlur = (event: FocusEvent) => {
-      const target = event.target as HTMLInputElement | HTMLTextAreaElement;
-      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {
-        scrollToTop();
-      }
-    };
-
-    // Add event listener to the document
-    document.addEventListener("blur", handleBlur, true);
-
-    // Clean up event listener on component unmount
-    return () => {
-      document.removeEventListener("blur", handleBlur, true);
-    };
-  }, []);
+  useScrollToTopOnBlur();
 
   const toggleTimeControl = () => {
     setShowTimeControl(!showTimeControl);

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import {
   ModalBackdrop,
   ModalContent,
@@ -14,6 +14,7 @@ import {
 } from "./styled-conponents/StyledModal";
 import { habitHubConstants } from "./Constants";
 import { DurationType } from "../Shared/types";
+import useScrollToTopOnBlur from "../hooks/useScrollToTopOnBlur";
 
 interface NewHabitModalProps {
   isOpen: boolean;
@@ -43,6 +44,8 @@ const NewHabitModal: React.FC<NewHabitModalProps> = ({
     updateEntryDurName: "Daily",
     updateEntryDurValue: 1,
   });
+
+  useScrollToTopOnBlur();
 
   const handleSave = () => {
     onSave(

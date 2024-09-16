@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { registerUser } from "./account";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons/faCircleCheck";
+import useScrollToTopOnBlur from "../hooks/useScrollToTopOnBlur";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -174,6 +175,8 @@ const Register: React.FC = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  useScrollToTopOnBlur();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

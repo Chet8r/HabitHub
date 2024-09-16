@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+input,
+textarea {
+  font-size: 16px; /* This is a common practice to prevent zoom on mobile devices */
+}
+
 /* General styles */
 body {
   margin: 0px;

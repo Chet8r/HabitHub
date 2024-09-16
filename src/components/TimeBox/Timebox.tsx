@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { ThemeProvider } from "styled-components";
 import {
   ContentWrapper,

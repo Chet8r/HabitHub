@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { ThemeProvider } from "styled-components";
 import {
   ContentWrapper,
@@ -20,9 +20,8 @@ import {
   SaveButton,
   FooterContainer,
 } from "./timeBoxStyleConponents";
-import { FaPlus, FaMinus, FaTrash, FaSave } from "react-icons/fa";
+import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import useScrollToTopOnBlur from "../hooks/useScrollToTopOnBlur";
-import axios from "axios";
 
 interface Task {
   text: string;

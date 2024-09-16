@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import {
   ContentWrapper,
@@ -32,6 +32,29 @@ const TimeboxDaily: React.FC = () => {
   const [hours, setHours] = useState<number>(6);
   const [showTimeControl, setShowTimeControl] = useState<boolean>(false);
   const [theme] = useState(lightTheme);
+
+  // Function to scroll to the top of the page
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    // Event listener to scroll to the top when an input field loses focus
+    const handleBlur = (event: FocusEvent) => {
+      const target = event.target as HTMLInputElement | HTMLTextAreaElement;
+      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {
+        scrollToTop();
+      }
+    };
+
+    // Add event listener to the document
+    document.addEventListener("blur", handleBlur, true);
+
+    // Clean up event listener on component unmount
+    return () => {
+      document.removeEventListener("blur", handleBlur, true);
+    };
+  }, []);
 
   const toggleTimeControl = () => {
     setShowTimeControl(!showTimeControl);

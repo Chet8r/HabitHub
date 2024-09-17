@@ -166,13 +166,13 @@ export const LeftSection = styled.section`
     background-color: ${({ theme }) => theme.inputBackground};
     border: 1px solid ${({ theme }) => theme.inputBorder};
     border-radius: 5px;
-    resize: vertical;
+    resize: vertical; /* Allow vertical resizing only */
     color: ${({ theme }) => theme.color};
   }
 
   @media (max-width: 768px) {
     width: 100%;
-    height: 100px;
+    height: auto; /* Adjust to allow dynamic height on mobile */
     margin-bottom: 10px;
 
     h3 {
@@ -180,6 +180,10 @@ export const LeftSection = styled.section`
       font-size: 1em;
       margin-bottom: 10px;
       color: ${({ theme }) => theme.color};
+    }
+
+    textarea {
+      min-height: 100px; /* Provide a minimum height for smaller screens */
     }
   }
 `;
@@ -193,8 +197,8 @@ export const RightSection = styled.section`
 `;
 
 export const TableWrapper = styled.div`
-  max-height: 60vh;
-  overflow-y: auto;
+  max-height: 60vh; /* Ensure the tasks section has a max height */
+  overflow-y: auto; /* Allows scrolling when content exceeds max height */
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -252,17 +256,6 @@ export const Td = styled.td`
   }
 `;
 
-export const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
-  z-index: 10;
-`;
-
 export const TimeControlMenu = styled.div`
   position: fixed;
   top: 50%;
@@ -271,18 +264,17 @@ export const TimeControlMenu = styled.div`
   background-color: ${({ theme }) =>
     theme.containColour}; /* Use container background color */
   padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 3%;
   z-index: 20;
   display: flex;
   flex-direction: column;
-  align-items: stretch; /* Ensure items stretch to full width */
+  align-items: stretch;
   gap: 16px;
   width: 90%;
   max-width: 360px;
 
   @media (max-width: 768px) {
-    width: 100%;
+    width: 80%;
     padding: 20px;
   }
 
@@ -291,12 +283,12 @@ export const TimeControlMenu = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding-bottom: 12px;
+    padding-bottom: 6px;
 
     label {
       font-size: 1em;
       color: ${({ theme }) => theme.color};
-      font-weight: 500;
+      font-weight: bold;
       text-transform: uppercase;
       width: 50%; /* Ensure label takes up half the width */
     }
@@ -305,15 +297,20 @@ export const TimeControlMenu = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 50%; /* Ensure button container takes up the remaining half */
+      width: 60%; /* Ensure button container takes up the remaining half */
+    }
+
+    span {
+      font-weight: bolder;
+      font-size: large;
     }
 
     .button {
+      margin-top: 0px;
       background-color: ${({ theme }) => theme.buttonBackground};
       color: ${({ theme }) => theme.buttonColor};
       border: none;
       padding: 12px;
-      /* border-radius: 50%; */
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -349,8 +346,10 @@ export const TimeDisplay = styled.div`
   }
 
   span {
-    font-size: 1.1em;
-    margin: 0 10px;
+    font-size: 1em;
+    font-weight: lighter;
+    color: black;
+    margin-right: 8px;
   }
 `;
 
@@ -358,42 +357,51 @@ export const TimeControlButton = styled.button`
   background-color: ${({ theme }) => theme.buttonBackground};
   color: ${({ theme }) => theme.buttonColor};
   border: none;
-  padding: 10px;
-  border-radius: 50%;
+  padding: 8px;
+  border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
     background-color: ${({ theme }) => theme.inputBorder};
   }
 
   svg {
-    font-size: 1.1em;
+    font-size: 1.2em;
   }
 `;
 
+export const TimeControlTitle = styled.h3`
+  font-size: 1em;
+  color: ${({ theme }) => theme.color};
+  margin: 0;
+`;
+
+export const TimeButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+`;
+
+export const TimeValue = styled.span`
+  font-size: 1.5em;
+  font-weight: bold;
+  color: ${({ theme }) => theme.color};
+  min-width: 60px;
+  text-align: center;
+`;
+
 export const ClearButton = styled.button`
-  background-color: darkred; /* Green background */
-  color: white; /* White text */
-  border: none; /* Remove border */
-  padding: 8px 16px; /* Add padding */
-  text-align: center; /* Center text */
-  text-decoration: none; /* Remove underline */
-  display: inline-block; /* Display inline-block */
-  font-size: 16px; /* Font size */
-  margin: 10px 2px; /* Margin */
-  cursor: pointer; /* Pointer cursor on hover */
-  border-radius: 5px; /* Rounded corners */
-  transition: background-color 0.3s ease; /* Smooth background color transition */
+  background-color: darkred;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
 
   &:hover {
-    background-color: #45a049; /* Darker green on hover */
-  }
-
-  &:disabled {
-    background-color: #c8c8c8; /* Light grey when disabled */
-    cursor: not-allowed;
+    background-color: red;
   }
 
   svg {
@@ -402,35 +410,39 @@ export const ClearButton = styled.button`
 `;
 
 export const SaveButton = styled.button`
-  background-color: #4caf50;
+  background-color: ${({ disabled }) => (disabled ? "#cccccc" : "#1db954")};
   color: white;
   border: none;
-  padding: 10px 16px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 10px 2px;
+  padding: 12px 24px;
+  border-radius: 8px;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+  pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
 
   &:hover {
-    background-color: #45a049;
-  }
-
-  &:disabled {
-    background-color: #c8c8c8;
-    cursor: not-allowed;
-  }
-
-  svg {
-    margin-right: 8px;
+    background-color: ${({ disabled }) => (disabled ? "#cccccc" : "#1ed760")};
   }
 `;
 
 export const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin-top: 20px;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8;
+  }
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10;
 `;

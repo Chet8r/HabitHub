@@ -166,13 +166,13 @@ export const LeftSection = styled.section`
     background-color: ${({ theme }) => theme.inputBackground};
     border: 1px solid ${({ theme }) => theme.inputBorder};
     border-radius: 5px;
-    resize: vertical; /* Allow vertical resizing only */
+    resize: none;
     color: ${({ theme }) => theme.color};
   }
 
   @media (max-width: 768px) {
     width: 100%;
-    height: auto; /* Adjust to allow dynamic height on mobile */
+    height: auto;
     margin-bottom: 10px;
 
     h3 {
@@ -183,7 +183,7 @@ export const LeftSection = styled.section`
     }
 
     textarea {
-      min-height: 100px; /* Provide a minimum height for smaller screens */
+      min-height: 100px;
     }
   }
 `;

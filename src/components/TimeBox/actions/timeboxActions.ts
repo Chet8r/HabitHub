@@ -8,6 +8,7 @@ import { API_URL } from "../../Habits/Actions/api";
 export const GET_TIMEBOX = "GET_TIMEBOX";
 export const UPDATE_TIMEBOX = "UPDATE_TIMEBOX";
 export const CLEAR_TIMEBOX = "CLEAR_TIMEBOX";
+export const MARK_TASK_TIMEBOX = "MARK_TASK_TIMEBOX";
 
 // Interfaces for actions
 interface GetTimeboxAction {
@@ -111,7 +112,7 @@ export const updateTaskCompletion = (
           },
         }
       );
-      dispatch({ type: UPDATE_TIMEBOX, payload: response.data });
+      dispatch({ type: MARK_TASK_TIMEBOX, payload: response.data });
     } catch (error) {
       console.error("Error updating task completion:", error);
     }

@@ -1,4 +1,5 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { useSelector } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import {
   ContentWrapper,
@@ -22,6 +23,13 @@ import {
 } from "./timeBoxStyleConponents";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import useScrollToTopOnBlur from "../hooks/useScrollToTopOnBlur";
+import {
+  getTimebox,
+  updateTimebox,
+  clearTimebox,
+  updateTaskCompletion,
+} from "./actions/timeboxActions"; // Assuming these actions are correctly imported
+import { RootState } from "../Habits/Reducers";
 
 interface Task {
   text: string;
@@ -29,6 +37,11 @@ interface Task {
 }
 
 const TimeboxDaily: React.FC = () => {
+  const userId = 1; // Assuming userId comes from some auth state
+
+  const timebox = useSelector((state: RootState) => state.timebox);
+
+  // State
   const [tasks, setTasks] = useState<Task[]>([]);
   const [notes, setNotes] = useState<string>("");
   const [startTime, setStartTime] = useState<number>(4);
@@ -39,6 +52,12 @@ const TimeboxDaily: React.FC = () => {
 
   useScrollToTopOnBlur();
 
+  // Fetch the timebox data on component mount
+  useEffect(() => {
+    if (!timebox) getTimebox(userId);
+  }, [userId]);
+
+  // Handlers
   const toggleTimeControl = () => {
     setShowTimeControl(!showTimeControl);
   };
@@ -83,12 +102,29 @@ const TimeboxDaily: React.FC = () => {
     };
     setTasks(newTasks);
     setIsDirty(true);
+
+    // Dispatch the task completion update to the server
+    updateTaskCompletion(userId, index, newTasks[index].completed);
   };
 
   const handleClearAll = () => {
+    // Clear local state
     setTasks([]);
     setNotes("");
     setIsDirty(true);
+
+    // Dispatch clear timebox to the server
+    clearTimebox();
+  };
+
+  const handleSaveChanges = () => {
+    const timeboxData = { startTime, hours, notes, tasks };
+
+    // Dispatch save timebox to the server
+    updateTimebox(userId, timeboxData);
+
+    // Reset dirty flag after saving
+    setIsDirty(false);
   };
 
   const renderTimeSlots = () => {
@@ -120,28 +156,6 @@ const TimeboxDaily: React.FC = () => {
     }
     return timeSlots;
   };
-
-  // const handleSave = async () => {
-  //   try {
-  //     await axios.post(
-  //       `${API_URL}/timebox`,
-  //       {
-  //         notes,
-  //         tasks,
-  //         startTime,
-  //         hours,
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  //     setIsDirty(false);
-  //   } catch (error) {
-  //     console.error("Error saving timebox:", error);
-  //   }
-  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -203,10 +217,7 @@ const TimeboxDaily: React.FC = () => {
                 <ClearButton onClick={handleClearAll}>
                   <FaTrash /> Clear All
                 </ClearButton>
-                <SaveButton
-                  onClick={() => console.log("saving")}
-                  disabled={!isDirty}
-                >
+                <SaveButton onClick={handleSaveChanges} disabled={!isDirty}>
                   Save Changes
                 </SaveButton>
               </FooterContainer>

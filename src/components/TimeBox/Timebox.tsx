@@ -140,6 +140,16 @@ const TimeboxDaily: React.FC = () => {
     setIsDirty(false);
   };
 
+  const CheckTaskTextEmpty = (index: number): boolean => {
+    if (timebox) {
+      return (
+        timebox?.tasks?.length > 0 && timebox.tasks[index]?.taskText === ""
+      );
+    } else {
+      return false;
+    }
+  };
+
   const renderTimeSlots = () => {
     const timeSlots = [];
     for (let i = 0; i < hours; i++) {
@@ -161,6 +171,7 @@ const TimeboxDaily: React.FC = () => {
             <input
               type="checkbox"
               checked={tasks[i]?.completed || false}
+              disabled={isDirty || CheckTaskTextEmpty(i)}
               onChange={() => handleTaskCompletionToggle(i)}
             />
           </Td>

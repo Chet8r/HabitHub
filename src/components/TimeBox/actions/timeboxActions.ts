@@ -110,6 +110,7 @@ export const clearTimebox: any = (userId: number) => {
         type: CLEAR_TIMEBOX,
         payload: response.data, // Optionally include any updated data
       });
+      dispatch(getTimebox(userId));
     } catch (error) {
       console.error("Error clearing timebox:", error);
       // Handle errors if needed

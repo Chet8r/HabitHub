@@ -66,8 +66,8 @@ const timeboxReducer = (
       return {
         ...state,
         timebox: {
-          startTime: 0,
-          hours: 0,
+          startTime: state.timebox?.startTime || 0,
+          hours: state.timebox?.hours || 1,
           notes: "",
           tasks: [],
           timeboxId: null,

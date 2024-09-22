@@ -62,17 +62,17 @@ const timeboxReducer = (
         timebox: action.payload.updatedTimebox,
       };
 
-    // case CLEAR_TIMEBOX:
-    //   return {
-    //     ...state,
-    //     timebox: {
-    //       startTime: 0,
-    //       hours: 0,
-    //       notes: "",
-    //       tasks: [],
-    //       timeboxId: state.timebox?.timeboxId,
-    //     },
-    //   };
+    case CLEAR_TIMEBOX:
+      return {
+        ...state,
+        timebox: {
+          startTime: 0,
+          hours: 0,
+          notes: "",
+          tasks: [],
+          timeboxId: null,
+        },
+      };
 
     case MARK_TASK_TIMEBOX:
       if (!state.timebox) return state;

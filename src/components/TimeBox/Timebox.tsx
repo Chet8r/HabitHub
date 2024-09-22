@@ -31,11 +31,7 @@ import {
 } from "./actions/timeboxActions";
 import { RootState } from "../Habits/Reducers";
 import { UserData } from "../Shared/types";
-
-interface Task {
-  taskText: string;
-  completed: boolean;
-}
+import { Task } from "./types/timeboxActionTypes";
 
 const TimeboxDaily: React.FC = () => {
   const dispatch = useDispatch();
@@ -123,15 +119,18 @@ const TimeboxDaily: React.FC = () => {
       completed: !newTasks[index].completed,
     };
     setTasks(newTasks);
-    setIsDirty(true);
     dispatch(updateTaskCompletion(userId, index, newTasks[index].completed));
   };
 
   const handleClearAll = () => {
-    setTasks([]);
-    setNotes("");
-    setIsDirty(true);
-    dispatch(clearTimebox());
+    const confirmClear = window.confirm(
+      "Are you sure you want to clear all tasks and notes?"
+    );
+    if (confirmClear) {
+      setTasks([]);
+      setNotes("");
+      dispatch(clearTimebox(user?.user?.userId));
+    }
   };
 
   const handleSaveChanges = () => {

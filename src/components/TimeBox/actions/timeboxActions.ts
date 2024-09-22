@@ -88,9 +88,34 @@ export const updateTimebox: any = (
 };
 
 // Clear Timebox
-export const clearTimebox: any = (): TimeboxActionTypes => ({
-  type: CLEAR_TIMEBOX,
-});
+export const clearTimebox: any = (userId: number) => {
+  return async (dispatch: any) => {
+    try {
+      // Get the token from local storage
+      const token = localStorage.getItem("token");
+
+      // Make the API call to clear the timebox
+      const response = await axios.post(
+        `${API_URL}/timebox/${userId}/timebox/clear`,
+        {}, // Include an empty object for the request body if needed
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in the headers
+          },
+        }
+      );
+
+      // Dispatch the action to update the Redux state
+      dispatch({
+        type: CLEAR_TIMEBOX,
+        payload: response.data, // Optionally include any updated data
+      });
+    } catch (error) {
+      console.error("Error clearing timebox:", error);
+      // Handle errors if needed
+    }
+  };
+};
 
 // mark complate
 export const updateTaskCompletion: any = (

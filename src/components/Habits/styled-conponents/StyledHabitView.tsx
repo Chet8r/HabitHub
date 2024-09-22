@@ -86,9 +86,17 @@ export const Header = styled.header`
 `;
 
 export const TableWrapper = styled.div`
-  max-height: 70vh;
+  max-height: 65vh;
   overflow-y: auto;
   position: relative;
+
+  @media (max-height: 600px) {
+    max-height: 75vh !important;
+  }
+
+  @media (display-mode: standalone) {
+    max-height: 75vh; /* Set max-height to 75% in standalone mode */
+  }
 
   /* Custom scrollbar styles */
   &::-webkit-scrollbar {
@@ -107,10 +115,6 @@ export const TableWrapper = styled.div`
 
   &::-webkit-scrollbar-thumb:hover {
     background-color: #333;
-  }
-
-  @media (max-height: 600px) {
-    max-height: 40vh;
   }
 `;
 

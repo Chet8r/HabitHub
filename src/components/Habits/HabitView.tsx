@@ -46,6 +46,7 @@ const HabitsTable: React.FC = () => {
   const sensitiveDataHidden = useSelector(
     (state: RootState) => state.nav.sensitiveDataHidden
   );
+
   const { data, loading } = useSelector((state: RootState) => state.user);
   const habits = useSelector((state: RootState) => state.habit.habits);
 

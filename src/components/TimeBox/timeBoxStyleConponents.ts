@@ -40,7 +40,7 @@ export const ContentWrapper = styled.div`
   padding: 20px 40px 40px 40px;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.containColour};
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
   color: ${({ theme }) => theme.color};
 
   @media (max-width: 768px) {

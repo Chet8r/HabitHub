@@ -20,6 +20,7 @@ import {
   ClearButton,
   SaveButton,
   FooterContainer,
+  darkTheme,
 } from "./timeBoxStyleConponents";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import useScrollToTopOnBlur from "../hooks/useScrollToTopOnBlur";
@@ -37,6 +38,9 @@ const TimeboxDaily: React.FC = () => {
   const dispatch = useDispatch();
   const timebox = useSelector((state: RootState) => state.timebox.timebox);
   const { data } = useSelector((state: RootState) => state.user);
+  const sensitiveDataHidden = useSelector(
+    (state: RootState) => state.nav.sensitiveDataHidden
+  );
 
   // State
   const [user, setUser] = useState<UserData>();
@@ -45,7 +49,7 @@ const TimeboxDaily: React.FC = () => {
   const [startTime, setStartTime] = useState<number>(4);
   const [hours, setHours] = useState<number>(6);
   const [showTimeControl, setShowTimeControl] = useState<boolean>(false);
-  const [theme] = useState(lightTheme);
+  const [theme] = useState(sensitiveDataHidden ? lightTheme : darkTheme);
   const [isDirty, setIsDirty] = useState<boolean>(false);
 
   const userId = user?.user.userId;

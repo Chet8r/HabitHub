@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faEye,
-  faEyeSlash,
   faUserFriends,
   faBars,
   faTimes,
   faUserCircle,
+  faSun,
+  faMoon,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../User/AuthContext";
@@ -301,7 +301,7 @@ function Nav() {
                   >
                     <div className="eyeBtn">
                       <FontAwesomeIcon
-                        icon={sensitiveDataHidden ? faEyeSlash : faEye}
+                        icon={sensitiveDataHidden ? faSun : faMoon}
                       />
                     </div>
                   </ToggleButton>
@@ -345,9 +345,7 @@ function Nav() {
               }}
             >
               <div className="eyeBtn">
-                <FontAwesomeIcon
-                  icon={sensitiveDataHidden ? faEyeSlash : faEye}
-                />
+                <FontAwesomeIcon icon={sensitiveDataHidden ? faMoon : faSun} />
               </div>
             </DropdownItem>
             <DropdownItem

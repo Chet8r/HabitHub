@@ -4,9 +4,9 @@ export const UPDATE_TIMEBOX = "UPDATE_TIMEBOX";
 export const CLEAR_TIMEBOX = "CLEAR_TIMEBOX";
 export const UPDATE_TASK = "UPDATE_TASK";
 
-interface Task {
-  id: number;
-  text: string;
+export interface Task {
+  taskId: number;
+  taskText: string;
   completed: boolean;
 }
 
@@ -15,6 +15,7 @@ export interface Timebox {
   hours: number;
   notes: string;
   tasks: Task[];
+  timeboxId: number | null;
 }
 
 interface GetTimeboxAction {

@@ -13,6 +13,7 @@ import MainLayout from "./components/Shared/MainLayout";
 import TimeboxDaily from "./components/TimeBox/Timebox";
 
 function App() {
+  document.body.style.overflow = "hidden";
   return (
     <Provider store={store}>
       <AuthProvider>

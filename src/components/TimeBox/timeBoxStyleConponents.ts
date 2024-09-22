@@ -197,7 +197,7 @@ export const RightSection = styled.section`
 `;
 
 export const TableWrapper = styled.div`
-  max-height: 60vh; /* Ensure the tasks section has a max height */
+  max-height: 50vh; /* Ensure the tasks section has a max height */
   overflow-y: auto; /* Allows scrolling when content exceeds max height */
 
   &::-webkit-scrollbar {

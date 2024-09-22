@@ -86,7 +86,7 @@ export const Header = styled.header`
 `;
 
 export const TableWrapper = styled.div`
-  max-height: 55vh;
+  max-height: 68vh;
   overflow-y: auto;
   position: relative;
 

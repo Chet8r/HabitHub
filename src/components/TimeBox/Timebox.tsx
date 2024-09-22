@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import {
   ContentWrapper,
@@ -28,34 +28,56 @@ import {
   updateTimebox,
   clearTimebox,
   updateTaskCompletion,
-} from "./actions/timeboxActions"; // Assuming these actions are correctly imported
+} from "./actions/timeboxActions";
 import { RootState } from "../Habits/Reducers";
+import { UserData } from "../Shared/types";
 
 interface Task {
-  text: string;
+  taskText: string;
   completed: boolean;
 }
 
 const TimeboxDaily: React.FC = () => {
-  const userId = 1; // Assuming userId comes from some auth state
-
-  const timebox = useSelector((state: RootState) => state.timebox);
+  const dispatch = useDispatch();
+  const timebox = useSelector((state: RootState) => state.timebox.timebox);
+  const { data } = useSelector((state: RootState) => state.user);
 
   // State
+  const [user, setUser] = useState<UserData>();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [notes, setNotes] = useState<string>("");
   const [startTime, setStartTime] = useState<number>(4);
   const [hours, setHours] = useState<number>(6);
   const [showTimeControl, setShowTimeControl] = useState<boolean>(false);
   const [theme] = useState(lightTheme);
-  const [isDirty, setIsDirty] = useState<boolean>(false); // Track if there are unsaved changes
+  const [isDirty, setIsDirty] = useState<boolean>(false);
+
+  const userId = user?.user.userId;
 
   useScrollToTopOnBlur();
 
+  useEffect(() => {
+    if (data && data.user) {
+      setUser(data);
+    }
+  }, [data]);
+
   // Fetch the timebox data on component mount
   useEffect(() => {
-    if (!timebox) getTimebox(userId);
-  }, [userId]);
+    if (userId) {
+      dispatch(getTimebox(userId));
+    }
+  }, [userId, dispatch]);
+
+  // Populate state with fetched timebox data
+  useEffect(() => {
+    if (timebox) {
+      setTasks(timebox.tasks || []);
+      setNotes(timebox.notes || "");
+      setStartTime(timebox.startTime || 4);
+      setHours(timebox.hours || 6);
+    }
+  }, [timebox]);
 
   // Handlers
   const toggleTimeControl = () => {
@@ -64,7 +86,7 @@ const TimeboxDaily: React.FC = () => {
 
   const handleTaskChange = (index: number, value: string) => {
     const newTasks = [...tasks];
-    newTasks[index] = { ...newTasks[index], text: value };
+    newTasks[index] = { ...newTasks[index], taskText: value };
     setTasks(newTasks);
     setIsDirty(true);
   };
@@ -102,28 +124,20 @@ const TimeboxDaily: React.FC = () => {
     };
     setTasks(newTasks);
     setIsDirty(true);
-
-    // Dispatch the task completion update to the server
-    updateTaskCompletion(userId, index, newTasks[index].completed);
+    dispatch(updateTaskCompletion(userId, index, newTasks[index].completed));
   };
 
   const handleClearAll = () => {
-    // Clear local state
     setTasks([]);
     setNotes("");
     setIsDirty(true);
-
-    // Dispatch clear timebox to the server
-    clearTimebox();
+    dispatch(clearTimebox());
   };
 
   const handleSaveChanges = () => {
-    const timeboxData = { startTime, hours, notes, tasks };
-
-    // Dispatch save timebox to the server
-    updateTimebox(userId, timeboxData);
-
-    // Reset dirty flag after saving
+    const timeboxId = timebox?.timeboxId;
+    const timeboxData = { startTime, hours, notes, tasks, timeboxId };
+    dispatch(updateTimebox(userId, timeboxData));
     setIsDirty(false);
   };
 
@@ -137,7 +151,7 @@ const TimeboxDaily: React.FC = () => {
           <Td>
             <input
               type="text"
-              value={tasks[i]?.text || ""}
+              value={tasks[i]?.taskText || ""}
               onChange={(e) => handleTaskChange(i, e.target.value)}
               style={{
                 textDecoration: tasks[i]?.completed ? "line-through" : "none",
@@ -165,7 +179,7 @@ const TimeboxDaily: React.FC = () => {
             <h2 className="title">TIMEBOX</h2>
             <ControlSection>
               <TimeDisplay onClick={toggleTimeControl}>
-                <span>Start: {startTime}:00</span>
+                <span>Start: {startTime}</span>
                 <span>Hours: {hours}</span>
               </TimeDisplay>
               {showTimeControl && (

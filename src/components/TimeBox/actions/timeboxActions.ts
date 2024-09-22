@@ -47,12 +47,12 @@ interface Task {
 // Action Creators
 
 // Get Timebox
-export const getTimebox = (
+export const getTimebox: any = (
   userId: number
 ): ThunkAction<void, RootState, unknown, TimeboxActionTypes> => {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get(`${API_URL}/users/${userId}/timebox`, {
+      const response = await axios.get(`${API_URL}/timebox/${userId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -65,14 +65,14 @@ export const getTimebox = (
 };
 
 // Update Timebox
-export const updateTimebox = (
+export const updateTimebox: any = (
   userId: number,
   timeboxData: TimeboxData
 ): ThunkAction<void, RootState, unknown, TimeboxActionTypes> => {
   return async (dispatch: Dispatch) => {
     try {
       const response = await axios.put(
-        `${API_URL}/users/${userId}/timebox`,
+        `${API_URL}/timebox/${userId}`,
         timeboxData,
         {
           headers: {
@@ -88,12 +88,12 @@ export const updateTimebox = (
 };
 
 // Clear Timebox
-export const clearTimebox = (): TimeboxActionTypes => ({
+export const clearTimebox: any = (): TimeboxActionTypes => ({
   type: CLEAR_TIMEBOX,
 });
 
 // mark complate
-export const updateTaskCompletion = (
+export const updateTaskCompletion: any = (
   userId: number,
   taskIndex: number,
   completed: boolean
@@ -101,7 +101,7 @@ export const updateTaskCompletion = (
   return async (dispatch: Dispatch) => {
     try {
       const response = await axios.put(
-        `${API_URL}/users/${userId}/timebox`,
+        `${API_URL}/timebox/${userId}/tasks`,
         {
           taskIndex,
           completed,

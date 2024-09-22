@@ -38,7 +38,7 @@ export type TimeboxActionTypes =
 
 // Timebox types
 interface Task {
-  text: string;
+  taskText: string;
   completed: boolean;
 }
 
@@ -47,6 +47,7 @@ interface Timebox {
   hours: number;
   notes: string;
   tasks: Task[];
+  timeboxId: number | null;
 }
 
 interface TimeboxState {
@@ -74,16 +75,17 @@ const timeboxReducer = (
         timebox: action.payload.updatedTimebox,
       };
 
-    case CLEAR_TIMEBOX:
-      return {
-        ...state,
-        timebox: {
-          startTime: 0,
-          hours: 0,
-          notes: "",
-          tasks: [],
-        },
-      };
+    // case CLEAR_TIMEBOX:
+    //   return {
+    //     ...state,
+    //     timebox: {
+    //       startTime: 0,
+    //       hours: 0,
+    //       notes: "",
+    //       tasks: [],
+    //       timeboxId: state.timebox?.timeboxId,
+    //     },
+    //   };
 
     case MARK_TASK_TIMEBOX:
       if (!state.timebox) return state;

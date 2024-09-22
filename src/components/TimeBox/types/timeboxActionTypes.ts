@@ -10,7 +10,7 @@ interface Task {
   completed: boolean;
 }
 
-interface Timebox {
+export interface Timebox {
   startTime: number;
   hours: number;
   notes: string;

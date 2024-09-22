@@ -4,6 +4,7 @@ import {
   MARK_TASK_TIMEBOX,
   UPDATE_TIMEBOX,
 } from "../actions/timeboxActions";
+import { Timebox } from "../types/timeboxActionTypes";
 
 // Define action types
 interface GetTimeboxAction {
@@ -35,20 +36,6 @@ export type TimeboxActionTypes =
   | UpdateTimeboxAction
   | ClearTimeboxAction
   | UpdateTaskCompletionAction;
-
-// Timebox types
-interface Task {
-  taskText: string;
-  completed: boolean;
-}
-
-interface Timebox {
-  startTime: number;
-  hours: number;
-  notes: string;
-  tasks: Task[];
-  timeboxId: number | null;
-}
 
 interface TimeboxState {
   timebox: Timebox | null;
@@ -94,8 +81,8 @@ const timeboxReducer = (
         ...state,
         timebox: {
           ...state.timebox,
-          tasks: state.timebox.tasks.map((task, index) =>
-            index === action.payload.taskId
+          tasks: state.timebox.tasks.map((task) =>
+            task.taskId === action.payload.taskId
               ? { ...task, completed: action.payload.completed }
               : task
           ),
